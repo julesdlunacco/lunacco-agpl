@@ -1,0 +1,35 @@
+# WordPress dist-archive ignore list — what to EXCLUDE from the release zip.
+# Having this file makes `wp dist-archive` ignore .gitignore, so the built
+# spa/dist (which IS gitignored) is correctly kept in the package.
+
+# VCS / CI / editor
+/.git
+/.github
+/.gitignore
+/.distignore
+/.vscode
+/.idea
+.DS_Store
+*.log
+
+# Dependencies (never ship)
+node_modules
+
+# Dev-only docs & scratch
+/scratch
+/CREDIT_SYSTEM.md
+/SHARED_LEDGER_INTEGRATION.md
+
+# SPA source & tooling — keep ONLY the built spa/dist
+/spa/src
+/spa/node_modules
+/spa/package.json
+/spa/package-lock.json
+/spa/index.html
+/spa/vite.config.js
+/spa/vite.config.js.timestamp-*.mjs
+/spa/vite.config.ts
+/spa/postcss.config.js
+/spa/tailwind.config.js
+/spa/.eslintrc.cjs
+/spa/eslint.config.js

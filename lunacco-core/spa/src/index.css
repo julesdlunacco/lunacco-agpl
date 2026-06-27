@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-transparent;
+    font-family: var(--font-ui), system-ui, sans-serif;
+    color: var(--ink);
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--indigo) var(--paper);
+  }
+
+  *::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: var(--paper);
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background: var(--indigo);
+    border-radius: 0;
+    border: 1px solid var(--paper);
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    background: var(--indigo-2);
+  }
+}
+
+/* Global Font Scaling - Outside @layer for higher priority */
+html {
+  font-size: calc(16px * var(--font-ui-scale, 1));
+}
+
+h1, h2, h3, h4, h5, h6, .font-display {
+  font-family: var(--font-display), serif;
+  font-weight: 400;
+  /* Scales relative to the set font-size */
+  font-size: calc(1em * var(--font-display-scale, 1));
+}

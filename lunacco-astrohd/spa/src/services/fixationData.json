@@ -1,0 +1,1977 @@
+{
+  "FIXATION_STATES": {
+    "Moon": {
+      "1": {
+        "1": "Exalted"
+      },
+      "4": {
+        "1": "Exalted",
+        "2": "Exalted"
+      },
+      "5": {
+        "3": "Detriment"
+      },
+      "6": {
+        "5": "Detriment"
+      },
+      "7": {
+        "3": "Exalted"
+      },
+      "8": {
+        "3": "Exalted"
+      },
+      "9": {
+        "4": "Exalted",
+        "6": "Exalted"
+      },
+      "10": {
+        "1": "Detriment",
+        "3": "Detriment"
+      },
+      "11": {
+        "1": "Exalted",
+        "4": "Exalted",
+        "5": "Exalted"
+      },
+      "13": {
+        "1": "Detriment",
+        "2": "Exalted"
+      },
+      "14": {
+        "4": "Exalted"
+      },
+      "16": {
+        "3": "Exalted",
+        "5": "Detriment"
+      },
+      "17": {
+        "2": "Detriment",
+        "6": "Exalted"
+      },
+      "18": {
+        "2": "Detriment",
+        "6": "Detriment"
+      },
+      "19": {
+        "1": "Detriment",
+        "3": "Detriment"
+      },
+      "20": {
+        "1": "Detriment",
+        "2": "Detriment"
+      },
+      "21": {
+        "1": "Detriment"
+      },
+      "22": {
+        "1": "Exalted"
+      },
+      "23": {
+        "2": "Detriment",
+        "5": "Detriment"
+      },
+      "24": {
+        "2": "Exalted",
+        "5": "Exalted"
+      },
+      "26": {
+        "6": "Detriment"
+      },
+      "27": {
+        "2": "Exalted",
+        "6": "Exalted"
+      },
+      "30": {
+        "6": "Detriment"
+      },
+      "31": {
+        "4": "Exalted",
+        "5": "Detriment",
+        "6": "Detriment"
+      },
+      "32": {
+        "5": "Exalted"
+      },
+      "34": {
+        "5": "Detriment"
+      },
+      "35": {
+        "2": "Detriment",
+        "4": "Exalted"
+      },
+      "36": {
+        "2": "Detriment",
+        "4": "Detriment"
+      },
+      "37": {
+        "4": "Exalted"
+      },
+      "38": {
+        "2": "Detriment"
+      },
+      "39": {
+        "2": "Exalted",
+        "4": "Exalted",
+        "6": "Exalted"
+      },
+      "40": {
+        "1": "Detriment",
+        "2": "Detriment"
+      },
+      "41": {
+        "3": "Detriment"
+      },
+      "42": {
+        "3": "Detriment",
+        "4": "Exalted",
+        "6": "Exalted"
+      },
+      "43": {
+        "2": "Detriment",
+        "3": "Detriment",
+        "5": "Exalted"
+      },
+      "46": {
+        "3": "Exalted",
+        "5": "Exalted"
+      },
+      "47": {
+        "4": "Detriment"
+      },
+      "48": {
+        "1": "Exalted",
+        "3": "Exalted",
+        "5": "Detriment",
+        "6": "Detriment"
+      },
+      "49": {
+        "5": "Exalted"
+      },
+      "50": {
+        "3": "Exalted",
+        "6": "Detriment"
+      },
+      "53": {
+        "2": "Exalted",
+        "3": "Exalted",
+        "4": "Exalted",
+        "6": "Exalted"
+      },
+      "55": {
+        "6": "Detriment"
+      },
+      "56": {
+        "1": "Exalted",
+        "2": "Detriment",
+        "4": "Exalted"
+      },
+      "57": {
+        "1": "Detriment",
+        "2": "Detriment",
+        "5": "Detriment"
+      },
+      "58": {
+        "1": "Detriment",
+        "5": "Exalted",
+        "6": "Exalted"
+      },
+      "61": {
+        "2": "Exalted",
+        "3": "Exalted"
+      },
+      "62": {
+        "5": "Exalted"
+      },
+      "64": {
+        "2": "Detriment",
+        "3": "Detriment",
+        "4": "Exalted"
+      }
+    },
+    "Uranus": {
+      "1": {
+        "1": "Detriment",
+        "5": "Detriment"
+      },
+      "2": {
+        "3": "Detriment"
+      },
+      "3": {
+        "2": "Detriment"
+      },
+      "5": {
+        "4": "Exalted"
+      },
+      "7": {
+        "4": "Detriment",
+        "6": "Detriment"
+      },
+      "10": {
+        "4": "Exalted"
+      },
+      "17": {
+        "5": "Exalted"
+      },
+      "18": {
+        "5": "Detriment"
+      },
+      "20": {
+        "5": "Detriment"
+      },
+      "25": {
+        "6": "Detriment"
+      },
+      "40": {
+        "4": "Exalted",
+        "5": "Exalted"
+      },
+      "44": {
+        "5": "Exalted"
+      },
+      "45": {
+        "2": "Exalted",
+        "5": "Exalted",
+        "6": "Exalted"
+      },
+      "51": {
+        "4": "Exalted"
+      },
+      "55": {
+        "5": "Exalted"
+      },
+      "56": {
+        "2": "Exalted",
+        "5": "Exalted"
+      },
+      "57": {
+        "6": "Exalted"
+      },
+      "58": {
+        "2": "Detriment",
+        "3": "Exalted"
+      },
+      "59": {
+        "2": "Exalted",
+        "5": "Detriment"
+      },
+      "60": {
+        "6": "Exalted"
+      },
+      "62": {
+        "3": "Exalted"
+      },
+      "63": {
+        "2": "Detriment"
+      }
+    },
+    "Venus": {
+      "1": {
+        "2": "Exalted"
+      },
+      "2": {
+        "1": "Exalted",
+        "4": "Exalted"
+      },
+      "3": {
+        "3": "Exalted"
+      },
+      "4": {
+        "3": "Exalted"
+      },
+      "5": {
+        "2": "Exalted",
+        "5": "Exalted"
+      },
+      "6": {
+        "2": "Exalted",
+        "5": "Exalted",
+        "6": "Detriment"
+      },
+      "7": {
+        "1": "Exalted",
+        "5": "Exalted"
+      },
+      "8": {
+        "6": "Exalted"
+      },
+      "11": {
+        "3": "Detriment"
+      },
+      "12": {
+        "1": "Exalted"
+      },
+      "13": {
+        "1": "Exalted",
+        "3": "Detriment",
+        "4": "Detriment"
+      },
+      "14": {
+        "5": "Detriment"
+      },
+      "15": {
+        "1": "Exalted",
+        "6": "Detriment"
+      },
+      "17": {
+        "1": "Detriment"
+      },
+      "19": {
+        "3": "Exalted",
+        "4": "Detriment"
+      },
+      "20": {
+        "1": "Exalted",
+        "2": "Exalted",
+        "6": "Exalted"
+      },
+      "21": {
+        "6": "Detriment"
+      },
+      "24": {
+        "3": "Exalted"
+      },
+      "25": {
+        "4": "Exalted",
+        "5": "Exalted"
+      },
+      "26": {
+        "5": "Detriment"
+      },
+      "28": {
+        "1": "Detriment"
+      },
+      "29": {
+        "2": "Detriment",
+        "4": "Detriment"
+      },
+      "32": {
+        "2": "Exalted"
+      },
+      "34": {
+        "2": "Detriment"
+      },
+      "35": {
+        "1": "Exalted",
+        "2": "Exalted"
+      },
+      "37": {
+        "1": "Exalted",
+        "5": "Exalted",
+        "6": "Exalted"
+      },
+      "41": {
+        "4": "Detriment",
+        "5": "Detriment"
+      },
+      "42": {
+        "1": "Detriment",
+        "2": "Detriment",
+        "4": "Detriment",
+        "5": "Detriment"
+      },
+      "43": {
+        "1": "Detriment",
+        "5": "Detriment"
+      },
+      "44": {
+        "1": "Detriment"
+      },
+      "47": {
+        "5": "Exalted"
+      },
+      "48": {
+        "2": "Detriment",
+        "6": "Exalted"
+      },
+      "50": {
+        "1": "Detriment",
+        "2": "Detriment",
+        "6": "Exalted"
+      },
+      "51": {
+        "1": "Detriment"
+      },
+      "52": {
+        "2": "Exalted",
+        "3": "Detriment",
+        "6": "Exalted"
+      },
+      "53": {
+        "1": "Detriment",
+        "4": "Detriment"
+      },
+      "54": {
+        "1": "Detriment",
+        "3": "Detriment"
+      },
+      "55": {
+        "1": "Detriment",
+        "2": "Exalted"
+      },
+      "56": {
+        "3": "Detriment"
+      },
+      "57": {
+        "1": "Exalted",
+        "2": "Exalted",
+        "4": "Exalted"
+      },
+      "58": {
+        "1": "Exalted"
+      },
+      "59": {
+        "4": "Exalted",
+        "6": "Exalted"
+      },
+      "60": {
+        "1": "Exalted",
+        "4": "Detriment"
+      },
+      "61": {
+        "1": "Detriment"
+      },
+      "62": {
+        "3": "Detriment",
+        "4": "Exalted"
+      },
+      "64": {
+        "1": "Exalted",
+        "2": "Exalted",
+        "5": "Exalted",
+        "6": "Detriment"
+      }
+    },
+    "Mars": {
+      "1": {
+        "2": "Detriment",
+        "3": "Exalted",
+        "5": "Exalted"
+      },
+      "2": {
+        "1": "Detriment",
+        "2": "Detriment",
+        "4": "Detriment"
+      },
+      "3": {
+        "2": "Exalted",
+        "4": "Detriment",
+        "5": "Exalted"
+      },
+      "4": {
+        "2": "Detriment",
+        "6": "Detriment"
+      },
+      "5": {
+        "1": "Exalted"
+      },
+      "6": {
+        "2": "Detriment"
+      },
+      "9": {
+        "1": "Detriment",
+        "4": "Detriment"
+      },
+      "10": {
+        "2": "Detriment",
+        "5": "Detriment"
+      },
+      "11": {
+        "1": "Detriment",
+        "2": "Detriment"
+      },
+      "12": {
+        "3": "Detriment",
+        "5": "Detriment"
+      },
+      "13": {
+        "6": "Exalted"
+      },
+      "14": {
+        "2": "Detriment",
+        "4": "Detriment"
+      },
+      "15": {
+        "1": "Detriment"
+      },
+      "16": {
+        "3": "Detriment",
+        "4": "Detriment"
+      },
+      "17": {
+        "1": "Exalted",
+        "5": "Detriment"
+      },
+      "18": {
+        "6": "Exalted"
+      },
+      "19": {
+        "4": "Exalted",
+        "6": "Detriment"
+      },
+      "21": {
+        "1": "Exalted",
+        "2": "Exalted"
+      },
+      "22": {
+        "1": "Detriment",
+        "3": "Detriment",
+        "4": "Detriment",
+        "5": "Detriment",
+        "6": "Detriment"
+      },
+      "23": {
+        "1": "Detriment",
+        "6": "Exalted"
+      },
+      "24": {
+        "2": "Detriment",
+        "5": "Detriment"
+      },
+      "25": {
+        "2": "Detriment",
+        "3": "Exalted"
+      },
+      "26": {
+        "1": "Detriment",
+        "5": "Exalted"
+      },
+      "27": {
+        "2": "Detriment",
+        "3": "Detriment",
+        "4": "Detriment"
+      },
+      "28": {
+        "1": "Exalted"
+      },
+      "29": {
+        "1": "Exalted",
+        "3": "Exalted",
+        "6": "Exalted"
+      },
+      "30": {
+        "2": "Detriment",
+        "6": "Exalted"
+      },
+      "31": {
+        "4": "Detriment"
+      },
+      "32": {
+        "1": "Detriment",
+        "5": "Detriment"
+      },
+      "33": {
+        "1": "Detriment",
+        "3": "Detriment"
+      },
+      "34": {
+        "2": "Exalted",
+        "4": "Detriment",
+        "5": "Exalted"
+      },
+      "35": {
+        "4": "Detriment",
+        "6": "Detriment"
+      },
+      "36": {
+        "1": "Exalted"
+      },
+      "37": {
+        "3": "Detriment",
+        "5": "Detriment"
+      },
+      "38": {
+        "1": "Detriment",
+        "4": "Detriment"
+      },
+      "39": {
+        "1": "Exalted",
+        "5": "Detriment",
+        "6": "Detriment"
+      },
+      "40": {
+        "3": "Detriment",
+        "4": "Detriment"
+      },
+      "41": {
+        "2": "Detriment",
+        "5": "Exalted"
+      },
+      "42": {
+        "3": "Exalted"
+      },
+      "43": {
+        "6": "Detriment"
+      },
+      "44": {
+        "2": "Detriment",
+        "3": "Exalted",
+        "5": "Detriment"
+      },
+      "45": {
+        "1": "Detriment",
+        "2": "Detriment",
+        "3": "Detriment",
+        "4": "Detriment"
+      },
+      "46": {
+        "2": "Detriment",
+        "3": "Detriment"
+      },
+      "47": {
+        "3": "Detriment"
+      },
+      "48": {
+        "1": "Detriment",
+        "5": "Exalted"
+      },
+      "49": {
+        "4": "Detriment",
+        "5": "Detriment"
+      },
+      "50": {
+        "1": "Exalted",
+        "4": "Detriment",
+        "5": "Detriment"
+      },
+      "51": {
+        "2": "Exalted",
+        "5": "Detriment"
+      },
+      "52": {
+        "1": "Detriment",
+        "2": "Detriment"
+      },
+      "53": {
+        "2": "Detriment",
+        "3": "Detriment"
+      },
+      "54": {
+        "2": "Detriment"
+      },
+      "55": {
+        "3": "Detriment",
+        "4": "Detriment"
+      },
+      "56": {
+        "1": "Detriment",
+        "5": "Detriment"
+      },
+      "57": {
+        "4": "Detriment",
+        "6": "Detriment"
+      },
+      "58": {
+        "3": "Detriment"
+      },
+      "59": {
+        "3": "Detriment"
+      },
+      "60": {
+        "3": "Detriment"
+      },
+      "61": {
+        "2": "Detriment",
+        "3": "Detriment",
+        "5": "Detriment",
+        "6": "Detriment"
+      },
+      "62": {
+        "1": "Detriment"
+      },
+      "63": {
+        "1": "Detriment",
+        "4": "Detriment",
+        "5": "Detriment"
+      },
+      "64": {
+        "1": "Detriment",
+        "4": "Detriment"
+      }
+    },
+    "Earth": {
+      "1": {
+        "3": "Detriment",
+        "4": "Exalted",
+        "6": "Exalted"
+      },
+      "2": {
+        "5": "Detriment"
+      },
+      "3": {
+        "1": "Exalted",
+        "5": "Detriment"
+      },
+      "4": {
+        "1": "Detriment"
+      },
+      "5": {
+        "1": "Detriment"
+      },
+      "8": {
+        "2": "Detriment"
+      },
+      "9": {
+        "3": "Exalted",
+        "5": "Detriment"
+      },
+      "10": {
+        "3": "Exalted"
+      },
+      "12": {
+        "4": "Exalted",
+        "6": "Detriment"
+      },
+      "13": {
+        "3": "Exalted"
+      },
+      "14": {
+        "3": "Exalted",
+        "6": "Detriment"
+      },
+      "15": {
+        "2": "Detriment",
+        "3": "Exalted"
+      },
+      "16": {
+        "1": "Exalted"
+      },
+      "17": {
+        "3": "Detriment"
+      },
+      "18": {
+        "1": "Exalted",
+        "4": "Exalted"
+      },
+      "19": {
+        "5": "Exalted"
+      },
+      "20": {
+        "3": "Detriment"
+      },
+      "21": {
+        "4": "Detriment"
+      },
+      "23": {
+        "4": "Detriment"
+      },
+      "25": {
+        "6": "Exalted"
+      },
+      "27": {
+        "1": "Detriment"
+      },
+      "29": {
+        "5": "Detriment"
+      },
+      "31": {
+        "1": "Detriment"
+      },
+      "34": {
+        "6": "Exalted"
+      },
+      "38": {
+        "3": "Detriment",
+        "6": "Detriment"
+      },
+      "39": {
+        "3": "Detriment"
+      },
+      "40": {
+        "5": "Detriment",
+        "6": "Detriment"
+      },
+      "41": {
+        "4": "Exalted"
+      },
+      "44": {
+        "6": "Detriment"
+      },
+      "46": {
+        "4": "Exalted"
+      },
+      "48": {
+        "4": "Detriment"
+      },
+      "49": {
+        "2": "Exalted"
+      },
+      "52": {
+        "1": "Exalted",
+        "5": "Exalted"
+      },
+      "53": {
+        "5": "Detriment"
+      },
+      "55": {
+        "2": "Detriment"
+      },
+      "60": {
+        "2": "Detriment"
+      }
+    },
+    "Jupiter": {
+      "1": {
+        "4": "Detriment"
+      },
+      "2": {
+        "3": "Exalted"
+      },
+      "4": {
+        "5": "Exalted"
+      },
+      "8": {
+        "4": "Exalted",
+        "5": "Exalted"
+      },
+      "9": {
+        "2": "Detriment",
+        "5": "Exalted"
+      },
+      "10": {
+        "5": "Exalted"
+      },
+      "11": {
+        "6": "Detriment"
+      },
+      "12": {
+        "1": "Detriment"
+      },
+      "13": {
+        "5": "Detriment"
+      },
+      "14": {
+        "1": "Exalted",
+        "2": "Exalted"
+      },
+      "15": {
+        "4": "Exalted",
+        "5": "Exalted"
+      },
+      "16": {
+        "4": "Exalted",
+        "6": "Detriment"
+      },
+      "17": {
+        "4": "Detriment",
+        "6": "Detriment"
+      },
+      "18": {
+        "1": "Detriment",
+        "3": "Detriment"
+      },
+      "19": {
+        "2": "Exalted",
+        "5": "Detriment",
+        "6": "Exalted"
+      },
+      "20": {
+        "4": "Exalted"
+      },
+      "21": {
+        "3": "Detriment",
+        "4": "Exalted",
+        "5": "Exalted"
+      },
+      "22": {
+        "2": "Detriment",
+        "5": "Exalted"
+      },
+      "23": {
+        "1": "Exalted",
+        "2": "Exalted",
+        "5": "Exalted",
+        "6": "Detriment"
+      },
+      "24": {
+        "3": "Detriment",
+        "6": "Exalted"
+      },
+      "25": {
+        "4": "Exalted",
+        "5": "Detriment"
+      },
+      "27": {
+        "4": "Exalted",
+        "5": "Exalted"
+      },
+      "28": {
+        "2": "Detriment",
+        "3": "Detriment",
+        "4": "Exalted"
+      },
+      "29": {
+        "3": "Detriment",
+        "6": "Detriment"
+      },
+      "30": {
+        "1": "Detriment",
+        "3": "Detriment",
+        "4": "Detriment",
+        "5": "Exalted"
+      },
+      "31": {
+        "2": "Exalted",
+        "3": "Detriment"
+      },
+      "32": {
+        "2": "Detriment",
+        "3": "Detriment",
+        "4": "Exalted"
+      },
+      "33": {
+        "2": "Exalted",
+        "3": "Exalted",
+        "5": "Detriment",
+        "6": "Detriment"
+      },
+      "34": {
+        "6": "Detriment"
+      },
+      "35": {
+        "3": "Exalted",
+        "5": "Detriment"
+      },
+      "36": {
+        "1": "Detriment",
+        "3": "Detriment",
+        "6": "Exalted"
+      },
+      "37": {
+        "2": "Exalted",
+        "3": "Exalted"
+      },
+      "39": {
+        "2": "Detriment",
+        "3": "Exalted"
+      },
+      "43": {
+        "4": "Detriment"
+      },
+      "44": {
+        "2": "Exalted"
+      },
+      "45": {
+        "1": "Exalted",
+        "4": "Exalted",
+        "5": "Detriment",
+        "6": "Detriment"
+      },
+      "46": {
+        "1": "Detriment"
+      },
+      "47": {
+        "3": "Exalted"
+      },
+      "49": {
+        "1": "Exalted",
+        "4": "Exalted"
+      },
+      "51": {
+        "3": "Detriment"
+      },
+      "52": {
+        "4": "Detriment"
+      },
+      "54": {
+        "6": "Detriment"
+      },
+      "55": {
+        "1": "Exalted",
+        "4": "Exalted"
+      },
+      "60": {
+        "5": "Detriment"
+      },
+      "61": {
+        "4": "Detriment"
+      },
+      "63": {
+        "2": "Exalted",
+        "3": "Exalted",
+        "6": "Exalted"
+      },
+      "64": {
+        "5": "Detriment"
+      }
+    },
+    "Pluto": {
+      "1": {
+        "6": "Detriment"
+      },
+      "3": {
+        "3": "Detriment",
+        "6": "Detriment"
+      },
+      "4": {
+        "3": "Detriment",
+        "5": "Detriment"
+      },
+      "5": {
+        "2": "Detriment",
+        "5": "Detriment"
+      },
+      "6": {
+        "1": "Exalted",
+        "3": "Detriment",
+        "4": "Detriment"
+      },
+      "8": {
+        "6": "Detriment"
+      },
+      "9": {
+        "1": "Exalted",
+        "2": "Exalted",
+        "6": "Detriment"
+      },
+      "10": {
+        "6": "Exalted"
+      },
+      "11": {
+        "3": "Exalted"
+      },
+      "13": {
+        "4": "Exalted"
+      },
+      "15": {
+        "5": "Detriment",
+        "6": "Exalted"
+      },
+      "16": {
+        "5": "Exalted"
+      },
+      "17": {
+        "3": "Exalted",
+        "4": "Exalted"
+      },
+      "18": {
+        "2": "Exalted"
+      },
+      "21": {
+        "5": "Detriment",
+        "6": "Exalted"
+      },
+      "23": {
+        "3": "Detriment"
+      },
+      "24": {
+        "6": "Detriment"
+      },
+      "25": {
+        "3": "Detriment"
+      },
+      "26": {
+        "2": "Detriment",
+        "4": "Exalted"
+      },
+      "27": {
+        "3": "Exalted",
+        "6": "Detriment"
+      },
+      "28": {
+        "5": "Exalted",
+        "6": "Exalted"
+      },
+      "30": {
+        "3": "Exalted",
+        "4": "Exalted",
+        "5": "Detriment"
+      },
+      "31": {
+        "5": "Exalted"
+      },
+      "32": {
+        "6": "Exalted"
+      },
+      "33": {
+        "4": "Exalted",
+        "5": "Exalted"
+      },
+      "34": {
+        "1": "Detriment",
+        "4": "Exalted"
+      },
+      "36": {
+        "3": "Exalted",
+        "4": "Exalted",
+        "5": "Exalted"
+      },
+      "38": {
+        "2": "Exalted",
+        "4": "Exalted",
+        "5": "Detriment"
+      },
+      "40": {
+        "3": "Exalted"
+      },
+      "41": {
+        "6": "Detriment"
+      },
+      "43": {
+        "1": "Exalted",
+        "2": "Exalted",
+        "3": "Exalted"
+      },
+      "44": {
+        "1": "Exalted",
+        "4": "Exalted",
+        "6": "Exalted"
+      },
+      "46": {
+        "4": "Detriment"
+      },
+      "48": {
+        "2": "Exalted"
+      },
+      "49": {
+        "2": "Detriment",
+        "3": "Detriment"
+      },
+      "51": {
+        "1": "Exalted",
+        "6": "Detriment"
+      },
+      "52": {
+        "5": "Detriment"
+      },
+      "53": {
+        "6": "Detriment"
+      },
+      "54": {
+        "1": "Exalted",
+        "3": "Exalted"
+      },
+      "56": {
+        "6": "Detriment"
+      },
+      "57": {
+        "5": "Exalted"
+      },
+      "58": {
+        "4": "Exalted"
+      },
+      "59": {
+        "2": "Detriment"
+      },
+      "61": {
+        "6": "Exalted"
+      },
+      "62": {
+        "4": "Detriment"
+      },
+      "63": {
+        "6": "Detriment"
+      }
+    },
+    "Saturn": {
+      "2": {
+        "2": "Exalted",
+        "6": "Detriment"
+      },
+      "4": {
+        "4": "Detriment"
+      },
+      "8": {
+        "3": "Detriment"
+      },
+      "10": {
+        "6": "Detriment"
+      },
+      "12": {
+        "2": "Exalted"
+      },
+      "15": {
+        "4": "Detriment"
+      },
+      "18": {
+        "5": "Exalted"
+      },
+      "20": {
+        "5": "Exalted"
+      },
+      "22": {
+        "3": "Exalted"
+      },
+      "24": {
+        "4": "Exalted"
+      },
+      "26": {
+        "3": "Detriment",
+        "4": "Detriment"
+      },
+      "27": {
+        "5": "Detriment"
+      },
+      "28": {
+        "3": "Exalted"
+      },
+      "29": {
+        "4": "Exalted"
+      },
+      "32": {
+        "4": "Detriment"
+      },
+      "34": {
+        "1": "Exalted",
+        "3": "Exalted"
+      },
+      "35": {
+        "6": "Exalted"
+      },
+      "36": {
+        "6": "Detriment"
+      },
+      "37": {
+        "4": "Detriment"
+      },
+      "38": {
+        "5": "Exalted",
+        "6": "Exalted"
+      },
+      "41": {
+        "2": "Exalted",
+        "3": "Exalted",
+        "6": "Exalted"
+      },
+      "42": {
+        "6": "Detriment"
+      },
+      "46": {
+        "6": "Exalted"
+      },
+      "47": {
+        "1": "Exalted",
+        "2": "Exalted",
+        "4": "Exalted"
+      },
+      "49": {
+        "6": "Detriment"
+      },
+      "50": {
+        "4": "Exalted",
+        "5": "Exalted"
+      },
+      "52": {
+        "3": "Exalted",
+        "4": "Exalted"
+      },
+      "54": {
+        "2": "Exalted",
+        "6": "Exalted"
+      },
+      "55": {
+        "3": "Exalted",
+        "6": "Exalted"
+      },
+      "59": {
+        "3": "Exalted"
+      },
+      "60": {
+        "2": "Exalted",
+        "3": "Exalted"
+      },
+      "61": {
+        "4": "Exalted",
+        "5": "Exalted"
+      },
+      "62": {
+        "2": "Exalted",
+        "6": "Exalted"
+      },
+      "63": {
+        "3": "Detriment"
+      },
+      "64": {
+        "3": "Exalted"
+      }
+    },
+    "Mercury": {
+      "2": {
+        "5": "Exalted",
+        "6": "Exalted"
+      },
+      "3": {
+        "1": "Detriment"
+      },
+      "4": {
+        "6": "Exalted"
+      },
+      "6": {
+        "1": "Detriment",
+        "6": "Exalted"
+      },
+      "7": {
+        "1": "Detriment",
+        "2": "Detriment",
+        "3": "Detriment",
+        "6": "Exalted"
+      },
+      "8": {
+        "1": "Detriment",
+        "4": "Detriment"
+      },
+      "10": {
+        "2": "Exalted",
+        "4": "Detriment"
+      },
+      "11": {
+        "5": "Detriment"
+      },
+      "12": {
+        "2": "Detriment",
+        "4": "Detriment"
+      },
+      "13": {
+        "6": "Detriment"
+      },
+      "14": {
+        "1": "Detriment"
+      },
+      "15": {
+        "3": "Detriment"
+      },
+      "16": {
+        "1": "Detriment",
+        "2": "Detriment"
+      },
+      "18": {
+        "4": "Detriment"
+      },
+      "19": {
+        "2": "Detriment"
+      },
+      "20": {
+        "4": "Detriment",
+        "6": "Detriment"
+      },
+      "25": {
+        "1": "Detriment",
+        "2": "Exalted"
+      },
+      "28": {
+        "4": "Detriment"
+      },
+      "31": {
+        "2": "Detriment"
+      },
+      "32": {
+        "3": "Exalted"
+      },
+      "34": {
+        "3": "Detriment"
+      },
+      "35": {
+        "5": "Exalted"
+      },
+      "36": {
+        "5": "Detriment"
+      },
+      "37": {
+        "2": "Detriment",
+        "6": "Detriment"
+      },
+      "39": {
+        "1": "Detriment"
+      },
+      "41": {
+        "1": "Detriment"
+      },
+      "43": {
+        "4": "Exalted"
+      },
+      "47": {
+        "2": "Detriment"
+      },
+      "48": {
+        "3": "Detriment"
+      },
+      "50": {
+        "3": "Detriment"
+      },
+      "51": {
+        "2": "Detriment",
+        "4": "Detriment"
+      },
+      "56": {
+        "4": "Detriment"
+      },
+      "57": {
+        "3": "Exalted"
+      },
+      "58": {
+        "6": "Detriment"
+      },
+      "59": {
+        "1": "Detriment",
+        "4": "Detriment",
+        "6": "Detriment"
+      },
+      "60": {
+        "1": "Detriment",
+        "4": "Exalted",
+        "6": "Detriment"
+      },
+      "62": {
+        "2": "Detriment",
+        "6": "Detriment"
+      },
+      "63": {
+        "4": "Exalted"
+      },
+      "64": {
+        "6": "Exalted"
+      }
+    },
+    "Neptune": {
+      "3": {
+        "4": "Exalted"
+      },
+      "5": {
+        "3": "Exalted",
+        "6": "Exalted"
+      },
+      "6": {
+        "3": "Exalted"
+      },
+      "7": {
+        "2": "Exalted",
+        "5": "Detriment"
+      },
+      "8": {
+        "1": "Exalted"
+      },
+      "11": {
+        "2": "Exalted",
+        "6": "Exalted"
+      },
+      "12": {
+        "3": "Exalted"
+      },
+      "13": {
+        "5": "Exalted"
+      },
+      "14": {
+        "3": "Detriment"
+      },
+      "16": {
+        "6": "Exalted"
+      },
+      "18": {
+        "3": "Exalted"
+      },
+      "21": {
+        "2": "Detriment",
+        "3": "Exalted"
+      },
+      "22": {
+        "4": "Exalted"
+      },
+      "24": {
+        "1": "Detriment",
+        "4": "Detriment"
+      },
+      "25": {
+        "1": "Exalted"
+      },
+      "26": {
+        "1": "Exalted"
+      },
+      "28": {
+        "6": "Detriment"
+      },
+      "29": {
+        "1": "Detriment"
+      },
+      "32": {
+        "6": "Detriment"
+      },
+      "33": {
+        "2": "Detriment",
+        "4": "Detriment"
+      },
+      "35": {
+        "1": "Detriment"
+      },
+      "36": {
+        "2": "Exalted"
+      },
+      "38": {
+        "1": "Exalted"
+      },
+      "39": {
+        "5": "Exalted"
+      },
+      "41": {
+        "1": "Exalted"
+      },
+      "44": {
+        "3": "Detriment"
+      },
+      "45": {
+        "3": "Exalted"
+      },
+      "46": {
+        "1": "Exalted",
+        "5": "Detriment",
+        "6": "Detriment"
+      },
+      "47": {
+        "1": "Detriment"
+      },
+      "49": {
+        "3": "Exalted",
+        "6": "Exalted"
+      },
+      "52": {
+        "6": "Detriment"
+      },
+      "53": {
+        "1": "Exalted",
+        "5": "Exalted"
+      },
+      "58": {
+        "4": "Detriment"
+      },
+      "60": {
+        "5": "Exalted"
+      },
+      "61": {
+        "1": "Exalted"
+      },
+      "62": {
+        "1": "Exalted",
+        "5": "Detriment"
+      }
+    },
+    "Sun": {
+      "3": {
+        "6": "Exalted"
+      },
+      "4": {
+        "4": "Exalted"
+      },
+      "5": {
+        "4": "Detriment"
+      },
+      "6": {
+        "4": "Exalted"
+      },
+      "7": {
+        "4": "Exalted"
+      },
+      "8": {
+        "2": "Exalted",
+        "5": "Detriment"
+      },
+      "9": {
+        "3": "Detriment"
+      },
+      "10": {
+        "1": "Exalted"
+      },
+      "11": {
+        "4": "Detriment"
+      },
+      "12": {
+        "5": "Exalted",
+        "6": "Exalted"
+      },
+      "13": {
+        "2": "Detriment"
+      },
+      "14": {
+        "5": "Exalted",
+        "6": "Exalted"
+      },
+      "15": {
+        "2": "Exalted"
+      },
+      "16": {
+        "2": "Exalted"
+      },
+      "17": {
+        "2": "Exalted"
+      },
+      "19": {
+        "1": "Exalted"
+      },
+      "20": {
+        "3": "Exalted"
+      },
+      "22": {
+        "2": "Exalted",
+        "6": "Exalted"
+      },
+      "23": {
+        "3": "Exalted",
+        "4": "Exalted"
+      },
+      "24": {
+        "1": "Exalted"
+      },
+      "26": {
+        "2": "Exalted",
+        "3": "Exalted",
+        "6": "Exalted"
+      },
+      "27": {
+        "1": "Exalted"
+      },
+      "28": {
+        "2": "Exalted",
+        "5": "Detriment"
+      },
+      "29": {
+        "2": "Exalted",
+        "5": "Exalted"
+      },
+      "30": {
+        "1": "Exalted",
+        "2": "Exalted"
+      },
+      "31": {
+        "1": "Exalted",
+        "3": "Exalted",
+        "6": "Exalted"
+      },
+      "32": {
+        "1": "Exalted"
+      },
+      "33": {
+        "1": "Exalted",
+        "6": "Exalted"
+      },
+      "35": {
+        "3": "Detriment"
+      },
+      "38": {
+        "3": "Exalted"
+      },
+      "39": {
+        "4": "Detriment"
+      },
+      "40": {
+        "1": "Exalted",
+        "2": "Exalted",
+        "6": "Exalted"
+      },
+      "42": {
+        "1": "Exalted",
+        "2": "Exalted",
+        "5": "Exalted"
+      },
+      "43": {
+        "6": "Exalted"
+      },
+      "44": {
+        "4": "Detriment"
+      },
+      "46": {
+        "2": "Exalted"
+      },
+      "47": {
+        "6": "Detriment"
+      },
+      "48": {
+        "4": "Exalted"
+      },
+      "49": {
+        "1": "Detriment"
+      },
+      "50": {
+        "2": "Exalted"
+      },
+      "51": {
+        "3": "Exalted",
+        "5": "Exalted",
+        "6": "Exalted"
+      },
+      "54": {
+        "5": "Exalted"
+      },
+      "55": {
+        "5": "Detriment"
+      },
+      "56": {
+        "3": "Exalted",
+        "6": "Exalted"
+      },
+      "58": {
+        "5": "Detriment"
+      },
+      "59": {
+        "1": "Exalted",
+        "5": "Exalted"
+      },
+      "63": {
+        "1": "Exalted",
+        "5": "Exalted"
+      }
+    }
+  },
+  "HARMONIC_GATES": {
+    "1": [
+      1,
+      8
+    ],
+    "2": [
+      2,
+      14
+    ],
+    "3": [
+      3,
+      60
+    ],
+    "4": [
+      4,
+      63
+    ],
+    "5": [
+      5,
+      15
+    ],
+    "6": [
+      6,
+      59
+    ],
+    "7": [
+      7,
+      31
+    ],
+    "8": [
+      8,
+      1
+    ],
+    "9": [
+      9,
+      52
+    ],
+    "10": [
+      10,
+      20,
+      34,
+      57
+    ],
+    "11": [
+      11,
+      56
+    ],
+    "12": [
+      12,
+      22
+    ],
+    "13": [
+      13,
+      33
+    ],
+    "14": [
+      14,
+      2
+    ],
+    "15": [
+      15,
+      5
+    ],
+    "16": [
+      16,
+      48
+    ],
+    "17": [
+      17,
+      62
+    ],
+    "18": [
+      18,
+      58
+    ],
+    "19": [
+      19,
+      49
+    ],
+    "20": [
+      20,
+      10,
+      34,
+      57
+    ],
+    "21": [
+      21,
+      45
+    ],
+    "22": [
+      22,
+      12
+    ],
+    "23": [
+      23,
+      43
+    ],
+    "24": [
+      24,
+      61
+    ],
+    "25": [
+      25,
+      51
+    ],
+    "26": [
+      26,
+      44
+    ],
+    "27": [
+      27,
+      50
+    ],
+    "28": [
+      28,
+      38
+    ],
+    "29": [
+      29,
+      46
+    ],
+    "30": [
+      30,
+      41
+    ],
+    "31": [
+      31,
+      7
+    ],
+    "32": [
+      32,
+      54
+    ],
+    "33": [
+      33,
+      13
+    ],
+    "34": [
+      34,
+      10,
+      20,
+      57
+    ],
+    "35": [
+      35,
+      36
+    ],
+    "36": [
+      36,
+      35
+    ],
+    "37": [
+      37,
+      40
+    ],
+    "38": [
+      38,
+      28
+    ],
+    "39": [
+      39,
+      55
+    ],
+    "40": [
+      40,
+      37
+    ],
+    "41": [
+      41,
+      30
+    ],
+    "42": [
+      42,
+      53
+    ],
+    "43": [
+      43,
+      23
+    ],
+    "44": [
+      44,
+      26
+    ],
+    "45": [
+      45,
+      21
+    ],
+    "46": [
+      46,
+      29
+    ],
+    "47": [
+      47,
+      64
+    ],
+    "48": [
+      48,
+      16
+    ],
+    "49": [
+      49,
+      19
+    ],
+    "50": [
+      50,
+      27
+    ],
+    "51": [
+      51,
+      25
+    ],
+    "52": [
+      52,
+      9
+    ],
+    "53": [
+      53,
+      42
+    ],
+    "54": [
+      54,
+      32
+    ],
+    "55": [
+      55,
+      39
+    ],
+    "56": [
+      56,
+      11
+    ],
+    "57": [
+      57,
+      10,
+      20,
+      34
+    ],
+    "58": [
+      58,
+      18
+    ],
+    "59": [
+      59,
+      6
+    ],
+    "60": [
+      60,
+      3
+    ],
+    "61": [
+      61,
+      24
+    ],
+    "62": [
+      62,
+      17
+    ],
+    "63": [
+      63,
+      4
+    ],
+    "64": [
+      64,
+      47
+    ]
+  }
+}
