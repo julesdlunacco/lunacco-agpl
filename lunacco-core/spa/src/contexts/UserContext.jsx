@@ -12,7 +12,7 @@
 import { createContext, useContext, useState, useCallback, useEffect } from 'react';
 import { useAppConfig } from './AppConfigContext.jsx';
 import { useAuth } from './AuthContext.jsx';
-import { normalizeProfileData, EMPTY_PROFILE, deriveProfileSummaryFromChart } from '../utils/profile.js';
+import { normalizeProfileData, EMPTY_PROFILE } from '../utils/profile.js';
 
 const DEFAULT_USER_CONTEXT = {
   balance: 0,
@@ -211,25 +211,8 @@ export function UserProvider( { children } ) {
         },
       };
 
-      // Auto-fill the profile's Astrology / Human Design summary from the user's
-      // own natal chart (any natal pull — default or chart maker). Text fields
-      // only fill when empty so manual edits are preserved; ascendant_longitude
-      // (drives dashboard houses, not user-editable) always refreshes.
-      if ( cacheKey.startsWith( 'natal_' ) ) {
-        const summary = deriveProfileSummaryFromChart( data?.data );
-        const astro = { ...( updatedProfile.astrology || {} ) };
-        const hd    = { ...( updatedProfile.human_design || {} ) };
-        [ 'sun_sign', 'moon_sign', 'rising_sign' ].forEach( ( k ) => {
-          if ( summary.astrology[ k ] && ! `${ astro[ k ] || '' }`.trim() ) astro[ k ] = summary.astrology[ k ];
-        } );
-        if ( summary.astrology.ascendant_longitude ) astro.ascendant_longitude = summary.astrology.ascendant_longitude;
-        [ 'type', 'profile', 'incarnation_cross' ].forEach( ( k ) => {
-          if ( summary.human_design[ k ] && ! `${ hd[ k ] || '' }`.trim() ) hd[ k ] = summary.human_design[ k ];
-        } );
-        updatedProfile.astrology = astro;
-        updatedProfile.human_design = hd;
-      }
-
+      // (Profile astro/HD summary auto-fill happens in CoreChartsView's
+      // onChartReady so it also runs on cache hits — not here.)
       setProfileData( updatedProfile );
       await saveProfile( updatedProfile );
     } else {

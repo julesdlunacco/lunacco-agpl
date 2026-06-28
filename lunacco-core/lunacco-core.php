@@ -2,7 +2,7 @@
 /**
  * Plugin Name: LunaCco Core
  * Description: Core SPA shell, authentication, credit system, profiles, AI configuration, and admin pages for the LunaCco platform.
- * Version: 1.1.0
+ * Version: 1.1.1
  * Author: LunaCco
  * License: AGPL-3.0-or-later
  * License URI: https://www.gnu.org/licenses/agpl-3.0.html
@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'LUNACCO_CORE_VERSION', '1.1.0' );
+define( 'LUNACCO_CORE_VERSION', '1.1.1' );
 define( 'LUNACCO_CORE_FILE', __FILE__ );
 define( 'LUNACCO_CORE_DIR', plugin_dir_path( __FILE__ ) );
 define( 'LUNACCO_CORE_URL', plugin_dir_url( __FILE__ ) );

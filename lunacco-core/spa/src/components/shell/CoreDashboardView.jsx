@@ -18,6 +18,16 @@ import { useTheme } from '../../contexts/ThemeContext.jsx';
 
 const preventCtxMenu = ( e ) => e.preventDefault();
 
+// Natal ascendant longitude for dashboard house placement. Prefer the REAL saved
+// natal chart (angles.ascendant, or the Ascendant body's longitude) over the
+// profile field, so houses always reflect actual chart data.
+function resolveNatalAscendant( userContext, profileData ) {
+  const data = userContext?.astrohd_profile_chart?.data;
+  const real = data?.angles?.ascendant ?? data?.birthActivations?.Ascendant?.longitude;
+  if ( real !== undefined && real !== null && `${ real }` !== '' ) return real;
+  return profileData?.astrology?.ascendant_longitude;
+}
+
 function adnUniversalDayDash( month, day, year ) {
   let s = [ ...String( month ), ...String( day ), ...String( year ) ]
     .reduce( ( acc, c ) => acc + parseInt( c, 10 ), 0 );
@@ -1278,7 +1288,7 @@ export default function CoreDashboardView( { setView } ) {
                     </div>
                     { /* Editorial almanac three-column row: Moon · Ingresses · Retrogrades + Stelliums */ }
                     {( () => {
-                      const asc = profileData?.astrology?.ascendant_longitude || userContext?.astrohd_profile_chart?.data?.angles?.ascendant;
+                      const asc = resolveNatalAscendant( userContext, profileData );
                       return (
                         <div className="epg-row1" style={{ marginTop: 0 }}>
                           <div className="epg-col">
@@ -1299,7 +1309,7 @@ export default function CoreDashboardView( { setView } ) {
                   </div>
 
                   { /* The Sky Today — editorial sky table */ }
-                  <EpgSkyTable natalAscendant={ profileData?.astrology?.ascendant_longitude || userContext?.astrohd_profile_chart?.data?.angles?.ascendant } />
+                  <EpgSkyTable natalAscendant={ resolveNatalAscendant( userContext, profileData ) } />
                 </div>
               ) }
 

@@ -19,6 +19,31 @@ import {
   Search, Plus, ChevronDown, X, Monitor,
 } from 'lucide-react';
 import AppFooter from './AppFooter.jsx';
+import { deriveProfileSummaryFromChart } from '../../utils/profile.js';
+
+// AstroHD chart types whose data carries the person's NATAL placements (safe to
+// auto-fill the profile summary from). Transits/connection are excluded — their
+// birthActivations are NOT the user's birth placements.
+const NATAL_CHART_TYPES = new Set( [ 'ahd_natal', 'ahd_wheel', 'ahd_dual_wheel', 'ahd_combined', 'ahd_shadow' ] );
+
+// Merge a chart-derived summary into a profile. Text fields fill only when empty
+// (manual edits preserved); ascendant_longitude always tracks the real chart so
+// dashboard houses stay accurate. Returns { next, changed }.
+function mergeProfileSummary( profile, summary ) {
+  const astro = { ...( profile.astrology || {} ) };
+  const hd    = { ...( profile.human_design || {} ) };
+  let changed = false;
+  [ 'sun_sign', 'moon_sign', 'rising_sign' ].forEach( ( k ) => {
+    if ( summary.astrology[ k ] && ! `${ astro[ k ] || '' }`.trim() ) { astro[ k ] = summary.astrology[ k ]; changed = true; }
+  } );
+  if ( summary.astrology.ascendant_longitude && `${ astro.ascendant_longitude || '' }` !== `${ summary.astrology.ascendant_longitude }` ) {
+    astro.ascendant_longitude = summary.astrology.ascendant_longitude; changed = true;
+  }
+  [ 'type', 'profile', 'incarnation_cross' ].forEach( ( k ) => {
+    if ( summary.human_design[ k ] && ! `${ hd[ k ] || '' }`.trim() ) { hd[ k ] = summary.human_design[ k ]; changed = true; }
+  } );
+  return { next: { ...profile, astrology: astro, human_design: hd }, changed };
+}
 
 // ─── Resizable sidebar support ─────────────────────────────────────────────────
 // Drag-to-resize a sidebar, persisted per key and clamped. `side: 'left'` means
@@ -700,6 +725,8 @@ function CoreChartsViewInner( { isMobileViewport, setView, routeParam } ) {
   const { useUser: _useUser } = window.LunaCcoHooks;
   const {
     profileData,
+    setProfileData,
+    saveProfile,
     people,
     peopleLoading,
     loadPeople,
@@ -1322,7 +1349,17 @@ function CoreChartsViewInner( { isMobileViewport, setView, routeParam } ) {
                   birthLat={ birthLat } birthLng={ birthLng } birthTimezone={ birthTimezone }
                   personKey={ `${ activeChartType }-${ currentPersonId }-${ triggerCalc }` }
                   triggerCalc={ triggerCalc }
-                  onChartReady={ d => { setAhdChartData( d ); setChartResult?.( d, currentInput, 'astrohd', activeChartType ); setEntitlementsTick( t => t + 1 ); } }
+                  onChartReady={ d => {
+                    setAhdChartData( d );
+                    setChartResult?.( d, currentInput, 'astrohd', activeChartType );
+                    setEntitlementsTick( t => t + 1 );
+                    // Auto-fill the profile summary from the user's own natal chart
+                    // (runs on cache hits too, unlike saveChartCache).
+                    if ( isMyselfSelected && NATAL_CHART_TYPES.has( activeChartType ) && d ) {
+                      const { next, changed } = mergeProfileSummary( profileData, deriveProfileSummaryFromChart( d ) );
+                      if ( changed ) { setProfileData( next ); saveProfile( next, { includeChartCache: false } ); }
+                    }
+                  } }
                   people={ people } profileIdentity={ profileIdentity }
                   isMyself={ isMyselfSelected }
                 />
