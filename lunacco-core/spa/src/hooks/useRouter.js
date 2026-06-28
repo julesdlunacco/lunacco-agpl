@@ -39,6 +39,12 @@ export function useRouter() {
     const allKeys = [ ...getAllViewKeys(), ...CORE_VIEWS ];
     const { view: fromHash, param } = parseHash( window.location.hash, allKeys, null );
 
+    // No hash at all (direct URL / first load) → always land on the dashboard,
+    // regardless of how many modules are active. Visiting the page bare should
+    // never deep-link into a module's charts view.
+    const hasHash = ( window.location.hash || '' ).replace( /^#/, '' ).trim().length > 0;
+    if ( ! hasHash ) return { view: 'dashboard', param: null };
+
     // Default to dashboard when 2+ modules are active OR if only numerology is active.
     if ( modules.length >= 2 || ( modules.length === 1 && modules[ 0 ].id === 'luna-numerology' ) ) {
       if ( fromHash && !MODULE_HOME_KEYS.has( fromHash ) && canAccessView( fromHash ) ) return { view: fromHash, param };

@@ -20,6 +20,64 @@ import {
 } from 'lucide-react';
 import AppFooter from './AppFooter.jsx';
 
+// ─── Resizable sidebar support ─────────────────────────────────────────────────
+// Drag-to-resize a sidebar, persisted per key and clamped. `side: 'left'` means
+// the handle sits on the panel's right edge (drag right = wider); `side: 'right'`
+// means the handle is on the left edge (drag left = wider).
+function useResizableWidth( { storageKey, defaultWidth, min, max, side } ) {
+  const [ width, setWidth ] = useState( () => {
+    const saved = parseInt( localStorage.getItem( storageKey ) || '', 10 );
+    return Number.isFinite( saved ) ? Math.min( max, Math.max( min, saved ) ) : defaultWidth;
+  } );
+  const dragging = useRef( false );
+  const startX = useRef( 0 );
+  const startW = useRef( 0 );
+
+  const onPointerDown = useCallback( ( e ) => {
+    dragging.current = true;
+    startX.current = e.clientX;
+    startW.current = width;
+    document.body.style.userSelect = 'none';
+    document.body.style.cursor = 'col-resize';
+    e.preventDefault();
+  }, [ width ] );
+
+  useEffect( () => {
+    const onMove = ( e ) => {
+      if ( ! dragging.current ) return;
+      const delta = e.clientX - startX.current;
+      const raw = side === 'right' ? startW.current - delta : startW.current + delta;
+      setWidth( Math.min( max, Math.max( min, raw ) ) );
+    };
+    const onUp = () => {
+      if ( ! dragging.current ) return;
+      dragging.current = false;
+      document.body.style.userSelect = '';
+      document.body.style.cursor = '';
+    };
+    window.addEventListener( 'pointermove', onMove );
+    window.addEventListener( 'pointerup', onUp );
+    return () => { window.removeEventListener( 'pointermove', onMove ); window.removeEventListener( 'pointerup', onUp ); };
+  }, [ min, max, side ] );
+
+  useEffect( () => { try { localStorage.setItem( storageKey, String( Math.round( width ) ) ); } catch ( _e ) {} }, [ width, storageKey ] );
+
+  return { width, onPointerDown };
+}
+
+// Thin draggable divider between a sidebar and the canvas.
+function ResizeHandle( { onPointerDown, title } ) {
+  return (
+    <div
+      onPointerDown={ onPointerDown }
+      title={ title || 'Drag to resize' }
+      role="separator"
+      aria-orientation="vertical"
+      className="shrink-0 w-1 cursor-col-resize bg-[var(--hair)] hover:bg-[var(--indigo)]/40 active:bg-[var(--indigo)]/60 transition-colors"
+    />
+  );
+}
+
 // ─── Desktop-recommended banner (shown on mobile chart pages) ──────────────────
 function MobileDesktopBanner() {
   return (
@@ -688,6 +746,10 @@ function CoreChartsViewInner( { isMobileViewport, setView, routeParam } ) {
   // Right interpretation panel as a slide-out drawer: open on load, closeable to a
   // thin handle, and re-opened automatically when a chart element is clicked.
   const [ drawerOpen, setDrawerOpen ] = useState( true );
+  // Drag-resizable sidebar widths (persisted, clamped). Defaults match the old
+  // fixed w-72 / w-96.
+  const leftResize  = useResizableWidth( { storageKey: 'lunacco_charts_left_w',  defaultWidth: 288, min: 200, max: 480, side: 'left' } );
+  const rightResize = useResizableWidth( { storageKey: 'lunacco_charts_right_w', defaultWidth: 384, min: 280, max: 600, side: 'right' } );
   // Left sidebar drill-in state: null = system list, else the drilled system id.
   const [ navSystem, setNavSystem ] = useState( null );
   const [ triggerCalc, setTriggerCalc ] = useState( 0 );
@@ -1332,7 +1394,10 @@ function CoreChartsViewInner( { isMobileViewport, setView, routeParam } ) {
     <div className="flex h-full overflow-hidden bg-[var(--paper)] relative">
 
       { /* ── Left Sidebar ── */ }
-      <aside className={ `flex-shrink-0 flex flex-col border-r border-[var(--hair)] bg-[var(--paper)] transition-all duration-300 overflow-hidden ${ sidebarOpen ? 'w-72' : 'w-14' }` }>
+      <aside
+        className={ `flex-shrink-0 flex flex-col border-r border-[var(--hair)] bg-[var(--paper)] overflow-hidden ${ sidebarOpen ? '' : 'w-14 transition-all duration-300' }` }
+        style={ sidebarOpen ? { width: leftResize.width } : undefined }
+      >
         <div className={ `flex items-center shrink-0 border-b border-[var(--hair)] ${ sidebarOpen ? 'px-5 py-4 justify-between' : 'px-0 py-4 justify-center' }` }>
           { sidebarOpen && (
             <div className="flex items-center gap-2">
@@ -1422,6 +1487,9 @@ function CoreChartsViewInner( { isMobileViewport, setView, routeParam } ) {
         ) }
       </aside>
 
+      { /* Drag handle — left sidebar */ }
+      { sidebarOpen && <ResizeHandle onPointerDown={ leftResize.onPointerDown } title="Drag to resize sidebar" /> }
+
       { /* ── Center Canvas ── */ }
       <main className="flex-1 flex flex-col min-w-0 overflow-hidden bg-[var(--paper)]">
         { isAstroHDType && AstroHDCenterPaneComp ? ( ahdNeedsPurchase ? ahdPurchaseGate : (
@@ -1472,8 +1540,14 @@ function CoreChartsViewInner( { isMobileViewport, setView, routeParam } ) {
         </button>
       ) }
 
+      { /* Drag handle — right interpretation drawer */ }
+      { drawerOpen && <ResizeHandle onPointerDown={ rightResize.onPointerDown } title="Drag to resize reading panel" /> }
+
       { /* ── Right Panel — Interpretation (slide-out drawer) ── */ }
-      <aside className={ `border-l border-[var(--hair)] bg-[var(--paper-2)] overflow-hidden flex flex-col h-full shrink-0 transition-all duration-300 ${ drawerOpen ? 'w-96' : 'w-0 border-l-0' }` }>
+      <aside
+        className={ `border-l border-[var(--hair)] bg-[var(--paper-2)] overflow-hidden flex flex-col h-full shrink-0 ${ drawerOpen ? '' : 'w-0 border-l-0 transition-all duration-300' }` }
+        style={ drawerOpen ? { width: rightResize.width } : undefined }
+      >
         <div className="px-6 py-4 border-b border-[var(--hair)] shrink-0 flex items-center justify-between">
           <div>
             <h2 style={{ fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:15, color:'var(--ink)', fontWeight:400, lineHeight:1.1, margin:0 }}>Reading</h2>

@@ -142,7 +142,7 @@ function ProfileSetupCard( { setView } ) {
 
   const handleSave = async () => {
     // Merge identity into existing profileData so other sections are not wiped
-    await saveProfile( { ...profileData, identity: { ...( profileData?.identity || {} ), ...fields } } );
+    await saveProfile( { ...profileData, identity: { ...( profileData?.identity || {} ), ...fields } }, { includeChartCache: false } );
     setSaved( true );
   };
 

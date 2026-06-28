@@ -99,8 +99,10 @@ export const Bodygraph: React.FC<BodygraphProps> = ({
     const arrowColor = theme?.arrowColor || 'var(--hd-variable-arrow, var(--ink, #000000))';
     const fontFamily = theme?.fontFamily || 'var(--font-ui, sans-serif)';
     const activeGateCircleColor = theme?.activeGateCircleColor || 'var(--hd-gate-circle, var(--paper, #ffffff))';
-    const shadowCenterFill = theme?.shadowUndefinedCenterColor || 'var(--hd-shadow-center, rgba(91, 141, 239, 0.16))';
-    const shadowDefinedCenterFill = theme?.shadowDefinedCenterColor || 'var(--hd-shadow-defined-center, rgba(120, 120, 130, 0.16))';
+    // Centers must be opaque so channels never show through them (fallbacks are
+    // solid, and the theme tokens are emitted opaque too).
+    const shadowCenterFill = theme?.shadowUndefinedCenterColor || 'var(--hd-shadow-center, #dbe2f4)';
+    const shadowDefinedCenterFill = theme?.shadowDefinedCenterColor || 'var(--hd-shadow-defined-center, #e6e6ea)';
     const shadowColors = {
         'conditioning-receptor': theme?.shadowConditioningColor || 'var(--hd-shadow-conditioning, #2f9f6b)',
         'mental-conditioner': theme?.shadowMentalColor || 'var(--hd-shadow-mental, #c23b4a)',

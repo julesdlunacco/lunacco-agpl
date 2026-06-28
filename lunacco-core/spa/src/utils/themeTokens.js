@@ -6,6 +6,21 @@
  * Supports theme families with paired light/dark modes.
  */
 
+// Flatten a tint over a background to an OPAQUE 6-digit hex. Bodygraph centers
+// must be opaque so channels never show through them. `bg` is a #rrggbb hex.
+const blendOpaque = (fg, bg, a) => {
+  const toRgb = (h) => {
+    const s = String(h).replace('#', '');
+    const v = s.length === 3 ? s.split('').map(c => c + c).join('') : s.slice(0, 6);
+    return [parseInt(v.slice(0, 2), 16), parseInt(v.slice(2, 4), 16), parseInt(v.slice(4, 6), 16)];
+  };
+  const [fr, fg_, fb] = toRgb(fg);
+  const [br, bg_, bb] = toRgb(bg);
+  const t = Math.max(0, Math.min(1, a));
+  const mix = (f, b) => Math.round(f * t + b * (1 - t)).toString(16).padStart(2, '0');
+  return `#${mix(fr, br)}${mix(fg_, bg_)}${mix(fb, bb)}`;
+};
+
 const createTheme = (family, mode, color, paper, ink, indigo, gold, card, mute, highlight, fontDisplay = 'Cormorant Garamond', fontUI = 'Inter') => ({
   id: `${family}-${mode}`,
   family,
@@ -37,8 +52,9 @@ const createTheme = (family, mode, color, paper, ink, indigo, gold, card, mute, 
     '--hd-gate-text-active': ink,
     '--hd-gate-text-inactive': mute,
     '--hd-variable-arrow': ink,
-    '--hd-shadow-center': mode === 'light' ? 'rgba(69,112,175,0.24)' : 'rgba(145,170,230,0.28)',
-    '--hd-shadow-defined-center': mode === 'light' ? 'rgba(120,120,130,0.14)' : 'rgba(210,210,220,0.12)',
+    // Opaque (blended over paper) so channels never show through the centers.
+    '--hd-shadow-center': mode === 'light' ? blendOpaque('#4570af', paper, 0.24) : blendOpaque('#91aae6', paper, 0.28),
+    '--hd-shadow-defined-center': mode === 'light' ? blendOpaque('#787882', paper, 0.14) : blendOpaque('#d2d2dc', paper, 0.12),
     '--hd-shadow-conditioning': mode === 'light' ? '#2f9f6b' : '#7bd6a8',
     '--hd-shadow-mental': mode === 'light' ? '#c23b4a' : '#f08a96',
     '--hd-shadow-transpersonal': mode === 'light' ? '#3f7fc0' : '#87b8ef',

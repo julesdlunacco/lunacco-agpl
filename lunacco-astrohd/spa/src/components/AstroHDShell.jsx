@@ -470,15 +470,15 @@ export function AstroHDPanel( { chartData, activeChart } ) {
     return chartLayers[key] ? !!chartLayers[key].enabled : true;
   }, [chartLayers]);
 
+  // Sidebar "shortcut" pills. Aspect / House Rulers / Stelliums / Moon Phase /
+  // Chart Shape (astro) and Gates / Variables (HD) were removed as pills per the
+  // 2026-06-28 design pass — their content still opens in the sidebar when the
+  // matching card/element on the chart is clicked (that sets selectedItems, which
+  // the panel renders independently of the pills).
   const astroPills = useMemo(() => {
     const out = [ 'Sun', 'Moon', 'Rising' ];
     if (layerOn('chart_ruler')) out.push('Chart Ruler');
     out.push('North Node');
-    if (layerOn('aspects')) out.push('Aspect');
-    if (layerOn('house_rulers')) out.push('House Rulers');
-    if (layerOn('stelliums')) out.push('Stelliums');
-    if (layerOn('moon_phase')) out.push('Moon Phase');
-    if (layerOn('chart_shape')) out.push('Chart Shape');
     return out;
   }, [layerOn]);
 
@@ -489,9 +489,6 @@ export function AstroHDPanel( { chartData, activeChart } ) {
     if (layerOn('profile')) out.push('Profile');
     if (layerOn('definition')) out.push('Definition');
     if (layerOn('channels')) out.push('Channels');
-    out.push('Gates');
-    // Circuitry pill removed for now (per design pass 2026-06-16).
-    if (layerOn('variables')) out.push('Variables');
     return out;
   }, [layerOn]);
   hdPillsRef.current = hdPills;
@@ -848,8 +845,23 @@ export function AstroHDPanel( { chartData, activeChart } ) {
       }
     });
 
-    // Sync the switcher options; pick (or keep) the active placement.
-    const activeKey = placements.find(p => p.key === activePlacementKey)?.key || placements[0]?.key || '';
+    // Which placement should be active? On a FRESH selection the reset effect clears
+    // activePlacementKey to '', so honour the clicked card's hint — an `hd_planets`
+    // item titled "<Side> <Planet>" (e.g. "Personality Mercury" or "Design North
+    // Node"). Once the user manually picks a switcher tab, activePlacementKey is set
+    // (selection unchanged, so no reset) and wins over the hint.
+    let hintKey = '';
+    const planetHint = items.find(i => i.sectionType === 'hd_planets' && i.title);
+    if (planetHint) {
+      const parts = String(planetHint.title).trim().split(/\s+/);
+      const side = parts[0]?.toLowerCase();
+      const planet = parts.slice(1).join(' ').toLowerCase();
+      if ((side === 'design' || side === 'personality') && planet) hintKey = `${side}-${planet}`;
+    }
+    const activeKey =
+      ( activePlacementKey && placements.find(p => p.key === activePlacementKey)?.key ) ||
+      placements.find(p => p.key === hintKey)?.key ||
+      placements[0]?.key || '';
     setGatePlacements(placements.map(({ key, side, planet }) => ({ key, side, planet })));
     if (activeKey !== activePlacementKey) setActivePlacementKey(activeKey);
 

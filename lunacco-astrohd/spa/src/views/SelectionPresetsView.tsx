@@ -7,7 +7,7 @@
  * user-defined and persisted site-wide.
  */
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { PLANET_CATALOG } from '../services/chartConfig';
 import { ASTEROID_CATALOG } from '../services/asteroidCatalog';
 import {
@@ -51,6 +51,51 @@ export default function SelectionPresetsView() {
   const [draft, setDraft] = useState<SelectionPreset>(emptyDraft());
   const [msg, setMsg] = useState('');
   const [loading, setLoading] = useState(true);
+  const importInputRef = useRef<HTMLInputElement>(null);
+
+  function downloadJson(filename: string, data: unknown) {
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = filename;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 2000);
+  }
+
+  function onExportAll() {
+    if (!presets.length) { setMsg('No layouts to export.'); return; }
+    downloadJson('selection-presets.json', { type: 'lunacco-selection-preset-collection', version: 1, presets });
+    setMsg(`Exported ${presets.length} layout${presets.length === 1 ? '' : 's'}.`);
+  }
+
+  function normalizePreset(c: any): SelectionPreset | null {
+    if (!c || typeof c !== 'object') return null;
+    const name = String(c.name || '').trim();
+    const key = String(c.key || slugify(name)).trim();
+    if (!key) return null;
+    return {
+      key, name: name || key,
+      asteroids: Array.isArray(c.asteroids) ? c.asteroids.map(String) : [],
+      planets_personality: Array.isArray(c.planets_personality) ? c.planets_personality.map(String) : [...PLANET_CATALOG],
+      planets_design: Array.isArray(c.planets_design) ? c.planets_design.map(String) : [...PLANET_CATALOG],
+    };
+  }
+
+  async function onImportFile(file: File) {
+    setMsg('Importing…');
+    try {
+      const data = JSON.parse(await file.text());
+      const list = Array.isArray(data?.presets) ? data.presets : Array.isArray(data) ? data : [data];
+      const incoming = list.map(normalizePreset).filter(Boolean) as SelectionPreset[];
+      if (!incoming.length) { setMsg('No layouts found in that file.'); return; }
+      let next = presets;
+      for (const p of incoming) next = await saveSelectionPreset(p);
+      setPresets(next);
+      setMsg(`Imported ${incoming.length} layout${incoming.length === 1 ? '' : 's'}.`);
+    } catch (e: any) {
+      setMsg(e?.message || 'Import failed — invalid file.');
+    }
+  }
 
   useEffect(() => {
     listSelectionPresets().then((p) => { setPresets(p); setLoading(false); }).catch(() => setLoading(false));
@@ -102,9 +147,15 @@ export default function SelectionPresetsView() {
           Saved <em style={{ color: 'var(--gold)' }}>layouts</em>
         </h1>
         <button onClick={() => { setDraft(emptyDraft()); setMsg(''); }}
-          style={{ width: '100%', padding: '8px', background: 'var(--ink)', color: '#fff', border: 'none', borderRadius: 8, fontSize: 12, fontWeight: 700, cursor: 'pointer', marginBottom: 12 }}>
+          style={{ width: '100%', padding: '8px', background: 'var(--ink)', color: '#fff', border: 'none', borderRadius: 8, fontSize: 12, fontWeight: 700, cursor: 'pointer', marginBottom: 8 }}>
           + New layout
         </button>
+        <div style={{ display: 'flex', gap: 6, marginBottom: 12 }}>
+          <button onClick={() => importInputRef.current?.click()} style={{ ...smallBtn, flex: 1 }}>Import</button>
+          <button onClick={onExportAll} style={{ ...smallBtn, flex: 1 }}>Export all</button>
+          <input ref={importInputRef} type="file" accept="application/json,.json" style={{ display: 'none' }}
+            onChange={(e) => { const f = e.target.files?.[0]; if (f) onImportFile(f); e.target.value = ''; }} />
+        </div>
         {loading && <p style={{ fontSize: 12, color: 'var(--mute)' }}>Loading…</p>}
         {!loading && presets.length === 0 && <p style={{ fontSize: 12, color: 'var(--mute)', fontStyle: 'italic' }}>None yet — create one.</p>}
         {presets.map((p) => (

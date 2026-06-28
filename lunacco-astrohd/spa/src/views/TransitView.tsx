@@ -9,6 +9,7 @@ import { Bodygraph } from '../components/Bodygraph';
 import ChartAttributionFooter from '../components/ChartAttributionFooter';
 import { HumanDesignLogic } from '../services/HumanDesignLogic';
 import { AstroWheel } from '../components/AstroWheel';
+import { Glyph } from '../components/Glyph';
 import { analyzeAstroInsights, AstroInsights, AstroPlanetLike } from '../services/AstroInsights';
 import { useMemo } from 'react';
 import { FixingState } from '../services/fixationData';
@@ -65,7 +66,7 @@ function TransitGateList( { data }: { data: any } ) {
               alignItems: 'baseline',
               justifyContent: 'center',
             }} title={p.planet}>
-              { p.symbol }
+              <Glyph kind="planet" name={ p.planet } size={ 16 } />
               { p.isRetrograde && (
                 <span 
                   title="Retrograde"
@@ -88,7 +89,7 @@ function TransitGateList( { data }: { data: any } ) {
               {p.fixation === FixingState.Detriment && <span title="Detriment" style={{ fontSize: 12, color: 'var(--hd-fixation, var(--gold))', lineHeight: 1 }}>▼</span>}
               {p.fixation === FixingState.Juxtaposed && <span title="Juxtaposed" style={{ fontSize: 14, color: 'var(--hd-fixation, var(--gold))', lineHeight: 1, marginTop: -2 }}>✶</span>}
             </span>
-            <span style={{ fontSize: 11.5, color: 'var(--mute)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{ p.sign }</span>
+            <span style={{ fontSize: 11.5, color: 'var(--mute)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', display: 'inline-flex', alignItems: 'center', gap: 4 }}>{ p.sign && <Glyph kind="sign" name={ p.sign } size={ 13 } /> }{ p.sign }</span>
             <span style={{ fontSize: 9, fontWeight: 700, color: 'var(--mute)', textAlign: 'right', opacity: 0.7, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
               { p.planet.length > 5 ? p.planet.substring(0,3) : p.planet }
             </span>
@@ -135,12 +136,12 @@ function TransitPlacementTable( { activations, natalAsc }: { activations: any, n
             return (
               <tr key={i} style={{ borderTop: '1px solid var(--hair)' }}>
                 <td style={{ padding: '10px 16px', display: 'flex', alignItems: 'center', gap: 10 }}>
-                  <span style={{ fontSize: 18, color: 'var(--gold)', fontFamily: 'var(--font-display)', fontStyle: 'italic' }}>{p.symbol}</span>
+                  <Glyph kind="planet" name={ p.name } size={ 18 } />
                   <span style={{ fontWeight: 600, color: 'var(--ink)' }}>{p.name}</span>
                   {p.isRetrograde && <span style={{ color: 'var(--hd-active)', fontWeight: 900, fontSize: 10 }}>Rx</span>}
                 </td>
                 <td style={{ padding: '10px 16px', color: 'var(--mute)' }}>
-                  {p.sign} {degStr}
+                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5 }}>{ p.sign && <Glyph kind="sign" name={ p.sign } size={ 14 } /> }{p.sign} {degStr}</span>
                 </td>
                 <td style={{ padding: '10px 16px', fontFamily: 'var(--mono)', color: 'var(--ink)' }}>
                   {p.gate}.{p.line}

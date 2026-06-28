@@ -76,10 +76,11 @@ export default function NatalView( {
   const [ error,          setError          ] = useState<string | null>( null );
   const [ chartData,      setChartData      ] = useState<any>( null );
   const [ selectedItem,   setSelectedItem   ] = useState<{ section_type: string, item_key: string, title?: string } | null>(null);
-  const [ houseSystem,    setHouseSystem    ] = useState<'whole_house' | 'placidus' | 'koch'>( config?.houseSystem || 'whole_house' );
+  const [ houseSystem,    setHouseSystem    ] = useState<'whole_house' | 'placidus' | 'koch'>( config?.houseSystem || 'koch' );
   const [ asteroidData,   setAsteroidData   ] = useState<any[]>( [] );
   const prevTrigger = useRef( triggerCalc );
   const prevHouseSystem = useRef( houseSystem );
+  const userTouchedHouse = useRef( false );
 
   // Follow the configured house system (e.g. live edits in the Chart Maker).
   useEffect( () => {
@@ -97,7 +98,16 @@ export default function NatalView( {
     timezone:  initialTimezone || Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC',
   };
 
-  const { refreshUser, saveChartCache } = ( window as any ).LunaCcoHooks?.useUser?.() || {};
+  const { refreshUser, saveChartCache, profileData } = ( window as any ).LunaCcoHooks?.useUser?.() || {};
+
+  // Apply the saved house-system preference when there's no Chart Maker override
+  // and the user hasn't picked manually.
+  useEffect( () => {
+    if ( ! config?.houseSystem && ! userTouchedHouse.current && profileData?.settings?.house_system ) {
+      setHouseSystem( profileData.settings.house_system );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ profileData?.settings?.house_system ] );
 
   async function calculate() {
     if ( ! form.date || ! form.latitude || ! form.longitude ) {
@@ -305,7 +315,7 @@ export default function NatalView( {
 
               { /* House System Toggle — universal flat editorial component. */ }
               {( !config || config.showHouseSystemToggle ) && !previewMode && (
-                <HouseSystemToggle value={ houseSystem } onChange={ setHouseSystem } />
+                <HouseSystemToggle value={ houseSystem } onChange={ ( h ) => { userTouchedHouse.current = true; setHouseSystem( h ); } } />
               )}
             </div>
 

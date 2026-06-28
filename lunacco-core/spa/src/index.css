@@ -34,7 +34,11 @@
   }
 }
 
-/* Global Font Scaling - Outside @layer for higher priority */
+/* Global Font Scaling - Outside @layer for higher priority.
+   --font-ui-scale = theme-level UI multiplier (admin, per theme). Only affects
+   rem-based text. The per-user accessibility "Text Size" preference is applied
+   separately via CSS zoom on #lunacco-app (ThemeContext) because the app uses
+   many hardcoded px sizes that rem scaling can't reach. */
 html {
   font-size: calc(16px * var(--font-ui-scale, 1));
 }

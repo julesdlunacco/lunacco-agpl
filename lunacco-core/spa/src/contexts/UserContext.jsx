@@ -12,7 +12,7 @@
 import { createContext, useContext, useState, useCallback, useEffect } from 'react';
 import { useAppConfig } from './AppConfigContext.jsx';
 import { useAuth } from './AuthContext.jsx';
-import { normalizeProfileData, EMPTY_PROFILE } from '../utils/profile.js';
+import { normalizeProfileData, EMPTY_PROFILE, deriveProfileSummaryFromChart } from '../utils/profile.js';
 
 const DEFAULT_USER_CONTEXT = {
   balance: 0,
@@ -138,9 +138,17 @@ export function UserProvider( { children } ) {
     }
   }, [ isLoggedIn, refreshUser, loadPeople ] );
 
-  const saveProfile = useCallback( async ( data ) => {
+  const saveProfile = useCallback( async ( data, { includeChartCache = true } = {} ) => {
     setProfileSaving( true );
     setProfileSavedMsg( '' );
+    // Lightweight saves (profile form) can skip the bulky chart_cache; the server
+    // preserves the stored cache when it's omitted. Local state keeps the full
+    // object so cached charts stay available without a refetch.
+    let payload = data;
+    if ( ! includeChartCache && data && typeof data === 'object' ) {
+      const { chart_cache, ...rest } = data;
+      payload = rest;
+    }
     try {
       const res = await fetch( root + 'lunacco/v1/user/profile', {
         method: 'POST',
@@ -148,7 +156,7 @@ export function UserProvider( { children } ) {
           'Content-Type': 'application/json',
           'X-WP-Nonce': nonce,
         },
-        body: JSON.stringify( { profile: data } ),
+        body: JSON.stringify( { profile: payload } ),
       } );
       if ( res.ok ) {
         setProfileData( normalizeProfileData( data ) );
@@ -202,6 +210,26 @@ export function UserProvider( { children } ) {
           [cacheKey]: data,
         },
       };
+
+      // Auto-fill the profile's Astrology / Human Design summary from the user's
+      // own natal chart (any natal pull — default or chart maker). Text fields
+      // only fill when empty so manual edits are preserved; ascendant_longitude
+      // (drives dashboard houses, not user-editable) always refreshes.
+      if ( cacheKey.startsWith( 'natal_' ) ) {
+        const summary = deriveProfileSummaryFromChart( data?.data );
+        const astro = { ...( updatedProfile.astrology || {} ) };
+        const hd    = { ...( updatedProfile.human_design || {} ) };
+        [ 'sun_sign', 'moon_sign', 'rising_sign' ].forEach( ( k ) => {
+          if ( summary.astrology[ k ] && ! `${ astro[ k ] || '' }`.trim() ) astro[ k ] = summary.astrology[ k ];
+        } );
+        if ( summary.astrology.ascendant_longitude ) astro.ascendant_longitude = summary.astrology.ascendant_longitude;
+        [ 'type', 'profile', 'incarnation_cross' ].forEach( ( k ) => {
+          if ( summary.human_design[ k ] && ! `${ hd[ k ] || '' }`.trim() ) hd[ k ] = summary.human_design[ k ];
+        } );
+        updatedProfile.astrology = astro;
+        updatedProfile.human_design = hd;
+      }
+
       setProfileData( updatedProfile );
       await saveProfile( updatedProfile );
     } else {

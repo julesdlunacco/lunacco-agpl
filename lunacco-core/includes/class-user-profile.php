@@ -40,6 +40,7 @@ class LunaCco_User_Profile {
 				'birth_timezone'   => '',
 				'luck_cycle_polarity' => '',
 				'current_timezone' => '',
+				'avatar_url'       => '',
 			],
 			'preferred_tone' => '',
 			'astrology'      => [
@@ -67,6 +68,8 @@ class LunaCco_User_Profile {
 				'font_display' => '',
 				'font_ui'      => '',
 				'font_mono'    => '',
+				'house_system' => 'koch',
+				'text_scale'   => '',
 			],
 			'chart_cache'    => [],
 		];
@@ -91,6 +94,7 @@ class LunaCco_User_Profile {
 				'birth_timezone'   => sanitize_text_field( $profile['identity']['birth_timezone']    ?? $empty['identity']['birth_timezone'] ),
 				'luck_cycle_polarity' => sanitize_text_field( $profile['identity']['luck_cycle_polarity'] ?? $empty['identity']['luck_cycle_polarity'] ),
 				'current_timezone' => sanitize_text_field( $profile['identity']['current_timezone']  ?? $empty['identity']['current_timezone'] ),
+				'avatar_url'       => esc_url_raw( $profile['identity']['avatar_url'] ?? $empty['identity']['avatar_url'] ),
 			],
 			'preferred_tone' => sanitize_text_field( $profile['preferred_tone'] ?? $empty['preferred_tone'] ),
 			'astrology'      => [
@@ -118,6 +122,8 @@ class LunaCco_User_Profile {
 				'font_display' => sanitize_text_field( $profile['settings']['font_display'] ?? $empty['settings']['font_display'] ),
 				'font_ui'      => sanitize_text_field( $profile['settings']['font_ui']      ?? $empty['settings']['font_ui'] ),
 				'font_mono'    => sanitize_text_field( $profile['settings']['font_mono']    ?? $empty['settings']['font_mono'] ),
+				'house_system' => sanitize_text_field( $profile['settings']['house_system'] ?? $empty['settings']['house_system'] ),
+				'text_scale'   => sanitize_text_field( $profile['settings']['text_scale']   ?? $empty['settings']['text_scale'] ),
 			],
 			'chart_cache'    => is_array( $profile['chart_cache'] ?? null ) ? $profile['chart_cache'] : $empty['chart_cache'],
 		];
@@ -145,6 +151,15 @@ class LunaCco_User_Profile {
 
 	public function save( int $user_id, array $profile ): array {
 		$clean = $this->sanitize( $profile );
+
+		// Preserve the existing (potentially large) chart_cache when the caller
+		// omits it — lets lightweight saves (e.g. a profile preference change)
+		// avoid re-uploading megabytes of cached chart data.
+		if ( ! array_key_exists( 'chart_cache', $profile ) || ! is_array( $profile['chart_cache'] ) || empty( $profile['chart_cache'] ) ) {
+			$existing = $this->get( $user_id );
+			$clean['chart_cache'] = $existing['chart_cache'];
+		}
+
 		update_user_meta( $user_id, 'lt_user_profile', $clean );
 		return $clean;
 	}
@@ -171,6 +186,55 @@ class LunaCco_User_Profile {
 		$profile = $this->save( $user_id, $params['profile'] ?? [] );
 
 		return rest_ensure_response( [ 'success' => true, 'profile' => $profile ] );
+	}
+
+	/**
+	 * Upload an optional profile image. Accepts a single `file` multipart field.
+	 * Validates that it's a small image, stores it in the uploads dir via
+	 * wp_handle_upload (no upload_files cap required), and returns the URL.
+	 * The caller still has to save the URL into the profile (identity.avatar_url).
+	 */
+	public function rest_upload_avatar( WP_REST_Request $request ) {
+		$user_id = get_current_user_id();
+		if ( ! $user_id ) {
+			return new WP_Error( 'not_logged_in', 'You must be logged in to upload an image.', [ 'status' => 401 ] );
+		}
+
+		$files = $request->get_file_params();
+		$file  = $files['file'] ?? null;
+		if ( ! $file || ! is_array( $file ) || empty( $file['tmp_name'] ) ) {
+			return new WP_Error( 'no_file', 'No image was uploaded.', [ 'status' => 400 ] );
+		}
+
+		// Validate it is actually an image and within size limits (5MB).
+		if ( ! empty( $file['size'] ) && $file['size'] > 5 * 1024 * 1024 ) {
+			return new WP_Error( 'too_large', 'Image must be under 5MB.', [ 'status' => 400 ] );
+		}
+		$check = wp_check_filetype_and_ext( $file['tmp_name'], $file['name'] );
+		$allowed = [ 'image/jpeg', 'image/png', 'image/gif', 'image/webp' ];
+		if ( empty( $check['type'] ) || ! in_array( $check['type'], $allowed, true ) ) {
+			return new WP_Error( 'bad_type', 'Please upload a JPEG, PNG, GIF, or WebP image.', [ 'status' => 400 ] );
+		}
+
+		if ( ! function_exists( 'wp_handle_upload' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/file.php';
+		}
+
+		$overrides = [
+			'test_form' => false,
+			'mimes'     => [
+				'jpg|jpeg' => 'image/jpeg',
+				'png'      => 'image/png',
+				'gif'      => 'image/gif',
+				'webp'     => 'image/webp',
+			],
+		];
+		$moved = wp_handle_upload( $file, $overrides );
+		if ( ! is_array( $moved ) || ! empty( $moved['error'] ) ) {
+			return new WP_Error( 'upload_failed', $moved['error'] ?? 'Upload failed.', [ 'status' => 500 ] );
+		}
+
+		return rest_ensure_response( [ 'success' => true, 'source_url' => esc_url_raw( $moved['url'] ) ] );
 	}
 
 	/**

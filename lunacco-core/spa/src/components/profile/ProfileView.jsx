@@ -4,7 +4,8 @@
  * Uses UserContext for profile data and saveProfile().
  * Modules read the relevant profile section for their focus/lens features.
  */
-import React from 'react';
+import React, { useRef, useState } from 'react';
+import { User, Upload } from 'lucide-react';
 import { useUser } from '../../contexts/UserContext.jsx';
 import { useAppConfig } from '../../contexts/AppConfigContext.jsx';
 import { useModuleRegistry } from '../../contexts/ModuleContext.jsx';
@@ -22,8 +23,42 @@ const inputClass = 'bg-[var(--paper)] border border-[var(--hair)] px-3 py-2 text
 
 export default function ProfileView() {
   const { profileData, setProfileData, saveProfile, profileSaving, profileSavedMsg } = useUser();
-  const { modules, returnMainUrl, returnMainLabel, buyCreditsUrl, becomeMemberUrl } = useAppConfig();
+  const { modules, returnMainUrl, returnMainLabel, buyCreditsUrl, becomeMemberUrl, root, nonce } = useAppConfig();
   const { modules: registeredModules } = useModuleRegistry();
+
+  const avatarInputRef = useRef( null );
+  const [ avatarUploading, setAvatarUploading ] = useState( false );
+  const [ avatarError, setAvatarError ] = useState( '' );
+
+  const handleAvatarUpload = async ( e ) => {
+    const file = e.target.files?.[ 0 ];
+    if ( ! file ) return;
+    setAvatarError( '' );
+    if ( ! file.type.startsWith( 'image/' ) ) { setAvatarError( 'Please choose an image file.' ); return; }
+    if ( file.size > 5 * 1024 * 1024 ) { setAvatarError( 'Image must be under 5MB.' ); return; }
+    setAvatarUploading( true );
+    try {
+      const form = new FormData();
+      form.append( 'file', file, file.name );
+      const res = await fetch( root + 'lunacco/v1/user/avatar', {
+        method: 'POST',
+        headers: { 'X-WP-Nonce': nonce },
+        body: form,
+      } );
+      if ( ! res.ok ) throw new Error( 'upload failed' );
+      const data = await res.json();
+      const url = data?.source_url || '';
+      if ( ! url ) throw new Error( 'no url' );
+      setProfileData( ( p ) => ( { ...p, identity: { ...p.identity, avatar_url: url } } ) );
+    } catch ( _err ) {
+      setAvatarError( 'Upload failed. Please try again.' );
+    } finally {
+      setAvatarUploading( false );
+      if ( avatarInputRef.current ) avatarInputRef.current.value = '';
+    }
+  };
+
+  const avatarUrl = profileData.identity?.avatar_url || '';
 
   const hasEastern = registeredModules.some( m => m.id === 'lunacco-eastern' );
   const hasNumerology = registeredModules.some( m => m.id === 'luna-numerology' );
@@ -39,6 +74,42 @@ export default function ProfileView() {
 
         <div className="bg-[var(--card)] border border-[var(--hair)] p-8 space-y-6" style={{ borderRadius: 'var(--radius-card, 0px)' }}>
           <h3 className="text-[10px] uppercase tracking-[0.2em] font-bold text-[var(--indigo)] mb-4">Identity</h3>
+
+          { /* Profile image — optional upload */ }
+          <div className="flex items-center gap-5 mb-2">
+            <div className="w-20 h-20 border border-[var(--hair)] bg-[var(--paper-2)] flex items-center justify-center overflow-hidden shrink-0" style={{ borderRadius: 'var(--radius-card, 0px)' }}>
+              { avatarUrl
+                ? <img src={ avatarUrl } alt="Profile" className="w-full h-full object-cover" />
+                : <User size={ 28 } className="text-[var(--mute)] opacity-50" /> }
+            </div>
+            <div className="flex flex-col gap-2">
+              <span className="text-[11px] uppercase tracking-widest font-bold text-[var(--mute)]">Profile Image</span>
+              <div className="flex items-center gap-3">
+                <button
+                  type="button"
+                  onClick={ () => avatarInputRef.current?.click() }
+                  disabled={ avatarUploading }
+                  className="px-3 py-2 text-[10px] font-bold uppercase tracking-widest bg-[var(--card)] border border-[var(--hair)] text-[var(--mute)] hover:text-[var(--ink)] hover:border-[var(--indigo)] transition-all flex items-center gap-2 disabled:opacity-50"
+                  style={{ borderRadius: 'var(--radius-input, 0px)' }}
+                >
+                  <Upload size={ 13 } /> { avatarUploading ? 'Uploading…' : ( avatarUrl ? 'Change' : 'Upload' ) }
+                </button>
+                { avatarUrl && (
+                  <button
+                    type="button"
+                    onClick={ () => setProfileData( ( p ) => ( { ...p, identity: { ...p.identity, avatar_url: '' } } ) ) }
+                    className="text-[10px] font-bold uppercase tracking-widest text-[var(--mute)] hover:text-rose-500 transition-colors"
+                  >
+                    Remove
+                  </button>
+                ) }
+              </div>
+              { avatarError && <span className="text-[10px] text-rose-500">{ avatarError }</span> }
+              <span className="text-[10px] text-[var(--mute)] opacity-60 italic">Optional · falls back to your account avatar. Remember to Commit Changes.</span>
+              <input ref={ avatarInputRef } type="file" accept="image/*" className="hidden" onChange={ handleAvatarUpload } />
+            </div>
+          </div>
+
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <Field label="Full Name">
               <input className={ inputClass } style={{ borderRadius: 'var(--radius-input, 0px)' }} placeholder="Your full name" value={ profileData.identity?.full_name || '' } onChange={ ( e ) => setProfileData( ( p ) => ( { ...p, identity: { ...p.identity, full_name: e.target.value } } ) ) } />
@@ -184,6 +255,47 @@ export default function ProfileView() {
         </div>
 
         <div className="bg-[var(--card)] border border-[var(--hair)] p-8" style={{ borderRadius: 'var(--radius-card, 0px)' }}>
+          <h3 className="text-[10px] uppercase tracking-[0.2em] font-bold text-[var(--indigo)] mb-6">Preferences</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl">
+            <div>
+              <Field label="House System">
+                <select
+                  className={ inputClass }
+                  style={{ borderRadius: 'var(--radius-input, 0px)' }}
+                  value={ profileData.settings?.house_system || 'koch' }
+                  onChange={ ( e ) => setProfileData( ( p ) => ( { ...p, settings: { ...p.settings, house_system: e.target.value } } ) ) }
+                >
+                  <option value="koch">Koch</option>
+                  <option value="placidus">Placidus</option>
+                  <option value="whole_house">Whole Sign</option>
+                </select>
+              </Field>
+              <p className="text-[10px] text-[var(--mute)] mt-2 italic leading-relaxed">
+                Default house system for your astrology charts. Applied on the chart landing; you can still switch per chart.
+              </p>
+            </div>
+            <div>
+              <Field label="Text Size">
+                <select
+                  className={ inputClass }
+                  style={{ borderRadius: 'var(--radius-input, 0px)' }}
+                  value={ profileData.settings?.text_scale || '1' }
+                  onChange={ ( e ) => setProfileData( ( p ) => ( { ...p, settings: { ...p.settings, text_scale: e.target.value } } ) ) }
+                >
+                  <option value="1">Default</option>
+                  <option value="1.1">Large</option>
+                  <option value="1.25">Larger</option>
+                  <option value="1.4">Largest</option>
+                </select>
+              </Field>
+              <p className="text-[10px] text-[var(--mute)] mt-2 italic leading-relaxed">
+                Increases text size across the whole app. Applies after you Commit Changes.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-[var(--card)] border border-[var(--hair)] p-8" style={{ borderRadius: 'var(--radius-card, 0px)' }}>
           <h3 className="text-[10px] uppercase tracking-[0.2em] font-bold text-[var(--indigo)] mb-6">Preferred Tone</h3>
           <select
             className={ `${ inputClass } w-full max-w-md` }
@@ -256,7 +368,7 @@ export default function ProfileView() {
         <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pt-6">
           <div className="flex items-center gap-4">
             <button
-              onClick={ () => saveProfile( profileData ) }
+              onClick={ () => saveProfile( profileData, { includeChartCache: false } ) }
               disabled={ profileSaving }
               className="px-10 py-3 bg-[var(--indigo)] hover:opacity-90 text-[var(--btn-fg)] font-bold text-[10px] uppercase tracking-[0.2em] transition-all disabled:opacity-50"
               style={{ borderRadius: 'var(--radius-button, 0px)' }}

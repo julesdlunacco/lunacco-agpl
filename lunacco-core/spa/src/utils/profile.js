@@ -8,7 +8,7 @@ export const EMPTY_PROFILE = {
     full_name: '', nickname: '', birthdate: '',
     city: '', region: '', country: '',
     birth_time: '', birth_location: '', birth_lat: '', birth_lng: '', birth_timezone: '', luck_cycle_polarity: '',
-    current_timezone: '',
+    current_timezone: '', avatar_url: '',
   },
   preferred_tone: '',
   astrology: { sun_sign: '', moon_sign: '', rising_sign: '', ascendant_longitude: '', stellium_sign_house: '' },
@@ -20,7 +20,7 @@ export const EMPTY_PROFILE = {
     motivation_number: '',
     destiny_number: ''
   },
-  settings: { theme_id: 'lavender', font_display: '', font_ui: '', font_mono: '' },
+  settings: { theme_id: 'lavender', font_display: '', font_ui: '', font_mono: '', house_system: 'koch', text_scale: '' },
   chart_cache: {},
 };
 
@@ -47,6 +47,7 @@ export function normalizeProfileData( raw ) {
       birth_timezone:   ( profile?.identity?.birth_timezone   || '' ).toString(),
       luck_cycle_polarity: ( profile?.identity?.luck_cycle_polarity || '' ).toString(),
       current_timezone: ( profile?.identity?.current_timezone || '' ).toString(),
+      avatar_url:       ( profile?.identity?.avatar_url       || '' ).toString(),
     },
     preferred_tone: ( profile.preferred_tone || '' ).toString(),
     astrology: {
@@ -73,9 +74,48 @@ export function normalizeProfileData( raw ) {
       font_display: ( profile?.settings?.font_display || '' ).toString(),
       font_ui: ( profile?.settings?.font_ui || '' ).toString(),
       font_mono: ( profile?.settings?.font_mono || '' ).toString(),
+      house_system: ( profile?.settings?.house_system || 'koch' ).toString(),
+      text_scale: ( profile?.settings?.text_scale || '' ).toString(),
     },
     chart_cache: profile?.chart_cache || {},
   };
+}
+
+/**
+ * Derive the human-readable profile summary (astrology signs + HD core) from a
+ * computed AstroHD natal chart. Used to auto-fill the profile's Astrology /
+ * Human Design display fields after the user pulls their own chart.
+ *
+ * Accepts a serialized chart object (top-level `type`/`authority`/`profile`/
+ * `incarnationCross` + `birthActivations`). Returns only the fields it could
+ * resolve; callers decide whether to fill empties or overwrite.
+ *
+ * @param {object} chart
+ * @returns {{ astrology: object, human_design: object }}
+ */
+export function deriveProfileSummaryFromChart( chart ) {
+  const out = { astrology: {}, human_design: {} };
+  if ( ! chart || typeof chart !== 'object' ) return out;
+
+  const acts = chart.birthActivations || {};
+  const sun  = acts.Sun || acts.sun;
+  const moon = acts.Moon || acts.moon;
+  const asc  = acts.Ascendant || acts.ascendant;
+
+  if ( sun?.sign )  out.astrology.sun_sign    = `${ sun.sign }`;
+  if ( moon?.sign ) out.astrology.moon_sign   = `${ moon.sign }`;
+  if ( asc?.sign )  out.astrology.rising_sign = `${ asc.sign }`;
+  if ( asc?.longitude !== undefined && asc?.longitude !== null ) {
+    out.astrology.ascendant_longitude = `${ asc.longitude }`;
+  }
+
+  if ( chart.type )      out.human_design.type    = `${ chart.type }`;
+  if ( chart.profile )   out.human_design.profile = `${ chart.profile }`;
+  const cross = chart.incarnationCross;
+  const crossName = typeof cross === 'string' ? cross : cross?.name;
+  if ( crossName ) out.human_design.incarnation_cross = `${ crossName }`;
+
+  return out;
 }
 
 export function getProfileSourceForLens( lensKey, personaCatalog = null ) {

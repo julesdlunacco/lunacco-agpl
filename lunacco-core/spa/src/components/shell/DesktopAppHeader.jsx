@@ -9,7 +9,7 @@
  * hover or keyboard focus. Settings is accessible from the profile menu.
  */
 import { useState, useRef, useCallback, useEffect, useMemo } from 'react';
-import { ChevronDown, Home, LogIn, LogOut, Moon, Save, Settings, Sparkles, Sun, User, Palette, ExternalLink, BarChart3, Calendar } from 'lucide-react';
+import { ChevronDown, Home, LogIn, LogOut, Moon, Save, Settings, Sparkles, Sun, User, Palette, ExternalLink, BarChart3, Calendar, CreditCard, Crown } from 'lucide-react';
 import { useAppConfig } from '../../contexts/AppConfigContext.jsx';
 import { useAuth } from '../../contexts/AuthContext.jsx';
 import { useUser } from '../../contexts/UserContext.jsx';
@@ -497,10 +497,10 @@ export default function DesktopAppHeader( { view, setView } ) {
                       <a href={ returnMainUrl } className="px-3 py-2 text-[11px] uppercase tracking-wider hover:bg-[var(--indigo)] hover:text-[var(--btn-fg)] transition text-[var(--ink)]">{ resolvedReturnMainLabel }</a>
                     ) }
                     { !isSubscriberUser && !!buyCreditsUrl && (
-                      <a href={ buyCreditsUrl } target="_blank" rel="noreferrer" className="px-3 py-2 text-[11px] uppercase tracking-wider hover:bg-[var(--indigo)] hover:text-[var(--btn-fg)] transition text-[var(--ink)]">Buy Credits</a>
+                      <a href={ buyCreditsUrl } target="_blank" rel="noreferrer" className="px-3 py-2 text-[11px] uppercase tracking-wider hover:bg-[var(--indigo)] hover:text-[var(--btn-fg)] transition flex items-center gap-2 text-[var(--ink)]"><CreditCard size={ 14 } /> Buy Credits</a>
                     ) }
                     { !isSubscriberUser && !!becomeMemberUrl && (
-                      <a href={ becomeMemberUrl } target="_blank" rel="noreferrer" className="px-3 py-2 text-[11px] uppercase tracking-wider hover:bg-[var(--indigo)] hover:text-[var(--btn-fg)] transition text-[var(--ink)]">Become a Member</a>
+                      <a href={ becomeMemberUrl } target="_blank" rel="noreferrer" className="px-3 py-2 text-[11px] uppercase tracking-wider hover:bg-[var(--indigo)] hover:text-[var(--btn-fg)] transition flex items-center gap-2 text-[var(--ink)]"><Crown size={ 14 } /> Become a Member</a>
                     ) }
                     <button onClick={ performLogout } className="px-3 py-2 text-[11px] uppercase tracking-wider text-left hover:bg-rose-500 hover:text-white transition flex items-center gap-2 text-[var(--ink)]">
                       <LogOut size={ 14 } /> Logout

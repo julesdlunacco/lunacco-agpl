@@ -2,7 +2,7 @@
 /**
  * Plugin Name:  Luna AstroHD Module
  * Description:  Astrology + Human Design module for the LunaCco platform. Bodygraph charts, astrology insights, daily snapshots, dashboard widgets. Built on Swiss Ephemeris (AGPL).
- * Version:      1.1.2
+ * Version:      1.2.0
  * Author:       LunaCco
  * Requires Plugins: lunacco-core
  * License:      AGPL-3.0-or-later
@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'LUNA_ASTROHD_VERSION', '1.1.3' );
+define( 'LUNA_ASTROHD_VERSION', '1.2.0' );
 define( 'LUNA_ASTROHD_FILE',    __FILE__ );
 define( 'LUNA_ASTROHD_DIR',     plugin_dir_path( __FILE__ ) );
 define( 'LUNA_ASTROHD_URL',     plugin_dir_url( __FILE__ ) );

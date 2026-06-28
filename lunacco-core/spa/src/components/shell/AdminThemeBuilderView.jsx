@@ -14,9 +14,14 @@ export default function AdminThemeBuilderView() {
   const [saveSuccess, setSaveSuccess] = useState(false);
   const importInputRef = useRef(null);
 
-  // Push a full token map straight onto :root for instant live preview.
+  // Push a full token map straight onto :root for instant live preview. Font-scale
+  // tokens are skipped — they're previewed locally in the preview box (see
+  // SCOPED_PREVIEW_TOKENS) so they never resize the whole window.
+  const SCOPED_PREVIEW_TOKENS = new Set(['--font-display-scale', '--font-ui-scale']);
   const applyTokensLive = (tokens) => {
-    Object.entries(tokens).forEach(([k, v]) => document.documentElement.style.setProperty(k, v));
+    Object.entries(tokens).forEach(([k, v]) => {
+      if (!SCOPED_PREVIEW_TOKENS.has(k)) document.documentElement.style.setProperty(k, v);
+    });
   };
 
   const handleAutoFill = () => {
@@ -94,9 +99,11 @@ export default function AdminThemeBuilderView() {
       ...prev,
       tokens: { ...prev.tokens, [key]: val }
     }));
-    
-    // Inject into document immediately for live preview
-    document.documentElement.style.setProperty(key, val);
+
+    // Inject into document immediately for live preview (except scoped tokens).
+    if (!SCOPED_PREVIEW_TOKENS.has(key)) {
+      document.documentElement.style.setProperty(key, val);
+    }
 
     // If it's a font token, trigger context font loading
     if (key === '--font-display-id' || key === '--font-ui-id') {
@@ -436,46 +443,54 @@ export default function AdminThemeBuilderView() {
                 </div>
               </div>
 
-              {/* Live Preview Samples */}
-              <div className="space-y-6 pt-10">
-                <h4 className="flex items-center gap-2 text-sm font-bold border-b border-subtle pb-2" style={{ borderColor: 'var(--hair)' }}>
-                  <Eye className="w-4 h-4" /> Live Component Preview
-                </h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  
-                  {/* Card Sample */}
-                  <div className="p-8 border border-subtle rounded-sm" style={{ background: 'var(--paper)', borderColor: 'var(--hair)' }}>
-                    <div className="p-6 border border-subtle" style={{ background: 'var(--card)', borderColor: 'var(--hair)' }}>
-                      <span className="text-[10px] uppercase tracking-widest font-bold mb-1 block" style={{ color: 'var(--mute)' }}>Numerology Card</span>
-                      <h5 className="text-4xl font-display mb-4" style={{ fontFamily: 'var(--font-display)' }}>11</h5>
-                      <p className="text-sm leading-relaxed" style={{ color: 'var(--ink)' }}>The Master Intuitive. High spiritual frequency and visionary insight.</p>
-                      <button 
-                        className="mt-6 px-4 py-2 text-xs font-bold uppercase tracking-wider" 
-                        style={{ background: 'var(--indigo)', color: 'var(--paper)' }}
-                      >
-                        Read More
-                      </button>
-                    </div>
-                  </div>
+              {/* Live Preview Samples — the font-scale sliders only resize THIS box.
+                  Sizes are em-based off a local px base so dragging never reflows the
+                  whole window. */}
+              {(() => {
+                const uiScale = parseFloat(editingTheme.tokens['--font-ui-scale'] || 1) || 1;
+                const dispScale = parseFloat(editingTheme.tokens['--font-display-scale'] || 1) || 1;
+                return (
+                <div className="space-y-6 pt-10">
+                  <h4 className="flex items-center gap-2 text-sm font-bold border-b border-subtle pb-2" style={{ borderColor: 'var(--hair)' }}>
+                    <Eye className="w-4 h-4" /> Live Component Preview <span className="opacity-40 font-normal normal-case">· reflects text size</span>
+                  </h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8" style={{ fontSize: `${16 * uiScale}px` }}>
 
-                  {/* List/Sidebar Sample */}
-                  <div className="p-8 border border-subtle rounded-sm" style={{ background: 'var(--paper-2)', borderColor: 'var(--hair)' }}>
-                    <div className="space-y-1">
-                      {['The Fool', 'The Magician', 'The High Priestess'].map((name, i) => (
-                        <div 
-                          key={name} 
-                          className="p-3 text-sm flex items-center justify-between"
-                          style={i === 1 ? { background: 'var(--highlight)', color: 'var(--ink)' } : { color: 'var(--ink)' }}
+                    {/* Card Sample */}
+                    <div className="p-8 border border-subtle rounded-sm" style={{ background: 'var(--paper)', borderColor: 'var(--hair)' }}>
+                      <div className="p-6 border border-subtle" style={{ background: 'var(--card)', borderColor: 'var(--hair)' }}>
+                        <span className="uppercase tracking-widest font-bold mb-1 block" style={{ color: 'var(--mute)', fontSize: '0.625em' }}>Numerology Card</span>
+                        <h5 className="font-display mb-4" style={{ fontFamily: 'var(--font-display)', fontSize: `${2.25 * dispScale}em` }}>11</h5>
+                        <p className="leading-relaxed" style={{ color: 'var(--ink)', fontSize: '0.875em' }}>The Master Intuitive. High spiritual frequency and visionary insight.</p>
+                        <button
+                          className="mt-6 px-4 py-2 font-bold uppercase tracking-wider"
+                          style={{ background: 'var(--indigo)', color: 'var(--paper)', fontSize: '0.75em' }}
                         >
-                          <span>{name}</span>
-                          {i === 1 && <div className="w-2 h-2 rounded-full" style={{ background: 'var(--indigo)' }}></div>}
-                        </div>
-                      ))}
+                          Read More
+                        </button>
+                      </div>
                     </div>
-                  </div>
 
+                    {/* List/Sidebar Sample */}
+                    <div className="p-8 border border-subtle rounded-sm" style={{ background: 'var(--paper-2)', borderColor: 'var(--hair)' }}>
+                      <div className="space-y-1">
+                        {['The Fool', 'The Magician', 'The High Priestess'].map((name, i) => (
+                          <div
+                            key={name}
+                            className="p-3 flex items-center justify-between"
+                            style={i === 1 ? { background: 'var(--highlight)', color: 'var(--ink)', fontSize: '0.875em' } : { color: 'var(--ink)', fontSize: '0.875em' }}
+                          >
+                            <span>{name}</span>
+                            {i === 1 && <div className="w-2 h-2 rounded-full" style={{ background: 'var(--indigo)' }}></div>}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                  </div>
                 </div>
-              </div>
+                );
+              })()}
             </div>
           ) : (
             <div className="h-full flex flex-col items-center justify-center text-center opacity-40">

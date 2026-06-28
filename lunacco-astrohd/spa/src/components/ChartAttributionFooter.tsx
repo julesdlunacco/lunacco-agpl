@@ -24,7 +24,9 @@ export default function ChartAttributionFooter() {
   const hasLinks = links.length > 0 || !! agpl;
 
   return (
-    <div style={{ marginTop: 32, paddingTop: 12, paddingBottom: 24, textAlign: 'center' }}>
+    // data-html2canvas-ignore: keep this attribution out of the PNG export
+    // (it still renders on-page for AGPL/legal compliance).
+    <div data-html2canvas-ignore style={{ marginTop: 32, paddingTop: 12, paddingBottom: 24, textAlign: 'center' }}>
       <p style={{ fontSize: 10, color: 'var(--mute)', lineHeight: 1.6, letterSpacing: '0.04em', maxWidth: 640, margin: '0 auto' }}>
         { text }
       </p>

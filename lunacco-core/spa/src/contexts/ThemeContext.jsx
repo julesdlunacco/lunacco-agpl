@@ -89,6 +89,31 @@ export function ThemeProvider({ children }) {
     if (siteDefaultThemeId !== activeThemeId) setActiveThemeId(siteDefaultThemeId);
   }, [siteDefaultThemeId, themesRegistry, activeThemeId]);
 
+  // Apply the per-user text-size preference (accessibility) as CSS zoom on the app
+  // mount node. zoom (not font-size) because the app uses many hardcoded px sizes
+  // that rem scaling can't reach — zoom enlarges everything proportionally.
+  //
+  // The CoreApp root is `h-dvh` (an *absolute* viewport height). Under zoom, dvh
+  // does NOT rescale (100dvh stays one viewport, then renders at scale×, clipping
+  // the bottom of scrollable pages), so we counter it: height = 100dvh / scale →
+  // renders back to exactly one viewport. Width is left alone: percentage widths
+  // DO resolve in the zoomed coordinate space, so `width:100%` already fills the
+  // viewport — counter-scaling it would leave an empty gap. Empty/1 = default.
+  useEffect(() => {
+    const scale = parseFloat(profileData?.settings?.text_scale || '');
+    const val = Number.isFinite(scale) && scale > 0 ? scale : 1;
+    const el = document.getElementById('lunacco-app');
+    if (!el) return;
+    const child = el.firstElementChild; // CoreApp root (h-dvh)
+    if (val === 1) {
+      el.style.zoom = '';
+      if (child) child.style.height = '';
+    } else {
+      el.style.zoom = String(val);
+      if (child) child.style.height = `calc(100dvh / ${val})`;
+    }
+  }, [profileData?.settings?.text_scale]);
+
   // Apply theme tokens and shape tokens
   useEffect(() => {
     const theme = themesRegistry[activeThemeId] || themesRegistry[DEFAULT_THEME_ID];

@@ -40,8 +40,8 @@ type Props = {
 };
 
 const SHADOW_THEME = {
-  shadowUndefinedCenterColor: 'var(--hd-shadow-center, rgba(69, 112, 175, 0.24))',
-  shadowDefinedCenterColor: 'var(--hd-shadow-defined-center, rgba(120, 120, 130, 0.14))',
+  shadowUndefinedCenterColor: 'var(--hd-shadow-center, #dbe2f4)',
+  shadowDefinedCenterColor: 'var(--hd-shadow-defined-center, #e6e6ea)',
   shadowConditioningColor: 'var(--hd-shadow-conditioning, #2f9f6b)',
   shadowMentalColor: 'var(--hd-shadow-mental, #c23b4a)',
   shadowTranspersonalColor: 'var(--hd-shadow-transpersonal, #3f7fc0)',

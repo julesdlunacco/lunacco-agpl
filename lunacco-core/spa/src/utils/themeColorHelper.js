@@ -78,6 +78,18 @@ function hslaHex(h, s, l, a) {
   return alphaHex(hslToHex(h, s, l), a);
 }
 
+// Flatten a tint over a background to a fully OPAQUE 6-digit hex — the visual
+// equivalent of `fg` at opacity `a` painted on `bg`, but with no alpha. Used for
+// bodygraph centers, which must be opaque so channels never show through them.
+function blendOver(fgHex, bgHex, a) {
+  const fg = hexToRgb(fgHex) || { r: 0, g: 0, b: 0 };
+  const bg = hexToRgb(bgHex) || { r: 255, g: 255, b: 255 };
+  const t = clamp(a, 0, 1);
+  const mix = (f, b) => Math.round(f * t + b * (1 - t));
+  const h2 = x => x.toString(16).padStart(2, '0');
+  return `#${h2(mix(fg.r, bg.r))}${h2(mix(fg.g, bg.g))}${h2(mix(fg.b, bg.b))}`;
+}
+
 /* ---------- token derivation ---------- */
 
 // Build the full foundation + element token set from a seed. Mirrors the
@@ -122,8 +134,10 @@ export function deriveTokens({ indigo, gold, mode = 'light', fontDisplay, fontUI
     '--hd-gate-text-active': ink,
     '--hd-gate-text-inactive': mute,
     '--hd-variable-arrow': ink,
-    '--hd-shadow-center': light ? alphaHex('#4570af', 0.24) : alphaHex('#91aae6', 0.28),
-    '--hd-shadow-defined-center': light ? alphaHex('#787882', 0.14) : alphaHex('#d2d2dc', 0.12),
+    // Centers must be OPAQUE (no alpha) — otherwise channels show through them.
+    // Blend the shadow tint over the paper background so the look is preserved.
+    '--hd-shadow-center': light ? blendOver('#4570af', paper, 0.24) : blendOver('#91aae6', paper, 0.28),
+    '--hd-shadow-defined-center': light ? blendOver('#787882', paper, 0.14) : blendOver('#d2d2dc', paper, 0.12),
     '--hd-shadow-conditioning': light ? '#2f9f6b' : '#7bd6a8',
     '--hd-shadow-mental': light ? '#c23b4a' : '#f08a96',
     '--hd-shadow-transpersonal': light ? '#3f7fc0' : '#87b8ef',

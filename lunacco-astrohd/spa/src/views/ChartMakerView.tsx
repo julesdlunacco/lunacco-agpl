@@ -11,7 +11,7 @@
  * core definition engine for the sidebar. Presets persist to core chart_presets.
  */
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import NatalView from './NatalView.tsx';
 import DualWheelView from './DualWheelView.tsx';
 import { FlatToggle } from '../components/HouseSystemToggle';
@@ -39,6 +39,7 @@ import {
   CARD_CATEGORIES,
   CardComposition,
   DEFAULT_CARD_COMPOSITIONS,
+  normalizeChartConfig,
 } from '../services/chartConfig';
 import CardBoxComposer from '../components/composer/CardBoxComposer';
 import { fetchTemplates, TemplateSummary } from '../services/DefinitionService';
@@ -276,6 +277,7 @@ export default function ChartMakerView() {
 
   // Presets + UI
   const [presets, setPresets] = useState<ChartPresetRow[]>([]);
+  const importInputRef = useRef<HTMLInputElement>(null);
   const [sets, setSets] = useState<DefinitionSetSummary[]>([]);
   const [selectionPresets, setSelectionPresets] = useState<SelectionPreset[]>([]);
   const [saveMsg, setSaveMsg] = useState<string>('');
@@ -429,6 +431,74 @@ export default function ChartMakerView() {
     setSaveMsg('Deleted.');
   }
 
+  // ── Import / export ──────────────────────────────────────────────────────────
+  function downloadJson(filename: string, data: unknown) {
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 2000);
+  }
+
+  /** Export the preset currently being edited as a single-preset JSON file. */
+  function onExportCurrent() {
+    const key = config.preset_key || slugify(config.title) || 'preset';
+    downloadJson(`${key}.chart-preset.json`, {
+      type: 'lunacco-chart-preset',
+      version: 1,
+      preset: config,
+    });
+    setSaveMsg('Exported current preset.');
+  }
+
+  /** Export every saved preset for the active set as a collection file. */
+  function onExportAll() {
+    if (!presets.length) { setSaveMsg('No saved presets to export.'); return; }
+    downloadJson('chart-presets.json', {
+      type: 'lunacco-chart-preset-collection',
+      version: 1,
+      presets: presets.map(rowToChartConfig),
+    });
+    setSaveMsg(`Exported ${presets.length} preset${presets.length === 1 ? '' : 's'}.`);
+  }
+
+  /** Parse an imported file into a list of ChartConfigs (single, collection, or raw). */
+  function parsePresetImport(raw: string): ChartConfig[] {
+    const data = JSON.parse(raw);
+    const configs =
+      Array.isArray(data?.presets) ? data.presets
+      : data?.preset ? [data.preset]
+      : Array.isArray(data) ? data
+      : [data];
+    return configs
+      .filter((c: any) => c && typeof c === 'object')
+      .map((c: any) => normalizeChartConfig(c));
+  }
+
+  async function onImportFile(file: File) {
+    setSaveMsg('Importing…');
+    try {
+      const incoming = parsePresetImport(await file.text());
+      if (!incoming.length) { setSaveMsg('No presets found in that file.'); return; }
+      let ok = 0;
+      for (const cfg of incoming) {
+        // Import into the currently-active set; key off the file's title/key.
+        const key = cfg.preset_key || slugify(cfg.title);
+        if (!key) continue;
+        await saveChartPreset({ ...cfg, set_id: config.set_id, preset_key: key });
+        ok++;
+      }
+      setPresets(await listChartPresets(config.set_id));
+      setSaveMsg(`Imported ${ok} preset${ok === 1 ? '' : 's'}.`);
+    } catch (e: any) {
+      setSaveMsg(e?.message || 'Import failed — invalid file.');
+    }
+  }
+
   const asteroidCount = config.wheels.asteroids === undefined ? ASTEROID_CATALOG.length : config.wheels.asteroids.length;
   // Visibility of each system in the preview, honoring scope + active tab.
   const hdVisible = config.scope === 'hd' || (config.scope === 'both' && activeTab === 'hd');
@@ -450,13 +520,29 @@ export default function ChartMakerView() {
           <div style={{ fontSize: 11, color: 'var(--mute)', fontFamily: 'monospace', padding: '2px 2px' }}>
             key: <span style={{ color: 'var(--ink)' }}>{config.preset_key || slugify(config.title) || '—'}</span>
           </div>
-          <button onClick={onSave} style={{ padding: '8px', background: 'var(--ink)', color: '#fff', border: 'none', borderRadius: 0, fontSize: 12, fontWeight: 700, cursor: 'pointer' }}>Save preset</button>
+          <div style={{ display: 'flex', gap: 6 }}>
+            <button onClick={onSave} style={{ flex: 1, padding: '8px', background: 'var(--ink)', color: '#fff', border: 'none', borderRadius: 0, fontSize: 12, fontWeight: 700, cursor: 'pointer' }}>Save preset</button>
+            <button onClick={onExportCurrent} title="Export this preset to a .json file" style={{ padding: '8px 10px', background: 'var(--card)', color: 'var(--ink)', border: '1px solid var(--hair)', borderRadius: 0, fontSize: 12, fontWeight: 700, cursor: 'pointer' }}>Export</button>
+          </div>
           {saveMsg && <p style={{ fontSize: 11, color: 'var(--mute)', margin: 0 }}>{saveMsg}</p>}
         </div>
 
         {/* Saved presets */}
         <div style={groupStyle}>
-          <p style={groupTitleStyle}>Saved presets</p>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8 }}>
+            <p style={{ ...groupTitleStyle, margin: 0 }}>Saved presets</p>
+            <div style={{ display: 'flex', gap: 6 }}>
+              <button onClick={() => importInputRef.current?.click()} title="Import presets from a .json file" style={{ fontSize: 10, fontWeight: 700, padding: '3px 8px', background: 'var(--card)', color: 'var(--ink)', border: '1px solid var(--hair)', cursor: 'pointer' }}>Import</button>
+              <button onClick={onExportAll} title="Export all saved presets" style={{ fontSize: 10, fontWeight: 700, padding: '3px 8px', background: 'var(--card)', color: 'var(--ink)', border: '1px solid var(--hair)', cursor: 'pointer' }}>Export all</button>
+            </div>
+          </div>
+          <input
+            ref={importInputRef}
+            type="file"
+            accept="application/json,.json"
+            style={{ display: 'none' }}
+            onChange={(e) => { const f = e.target.files?.[0]; if (f) onImportFile(f); e.target.value = ''; }}
+          />
           {presets.length === 0 && <p style={{ fontSize: 11, color: 'var(--mute)', fontStyle: 'italic', margin: 0 }}>None saved for this set yet.</p>}
           {presets.length > 0 && (
             <>

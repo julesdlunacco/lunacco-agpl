@@ -269,11 +269,13 @@ export const LunaccoBodygraph: React.FC<LunaccoBodygraphProps> = ({
       }
     });
 
-  }, [data, showGates, showCenters, gateFill, definedCenters,
-      stroke, inactiveFill, activeFill, designColor, personalityColor,
-      highlightedGate, highlightedCenter, onElementClick,
-      shadowMode, shadowCenterFill, shadowDefinedFill,
-      isGateDefined, showGateLabels, activeGateCircleColor, activeGateTextColor, inactiveGateTextColor]);
+    // NOTE: intentionally no dependency array — this paints the injected SVG
+    // (dangerouslySetInnerHTML) imperatively, so it must re-assert after EVERY
+    // commit. With a deps list, a re-render that left the deps unchanged but
+    // re-touched the host could leave the artwork unpainted (blank) until the
+    // next data change. Re-running each render is cheap (~150 setAttribute calls,
+    // no state updates) and keeps the artwork always in sync with current props.
+  });
 
   // ---- variable arrows (drawn over the art with the bespoke assets) --------
   // The bodygraph artwork has NO variable arrows, so we overlay them: one arrow

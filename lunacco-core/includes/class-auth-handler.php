@@ -237,7 +237,10 @@ class LunaCco_Auth_Handler {
 				'display_name'                  => $user ? $user->display_name : '',
 				'username'                      => $user ? $user->user_login : '',
 				'email'                         => $user ? $user->user_email : '',
-				'avatar_url'                    => esc_url_raw( $this->normalize_url( get_avatar_url( $user_id, [ 'size' => 96 ] ) ) ),
+				'avatar_url'                    => esc_url_raw( $this->normalize_url(
+					( $user_profile->get( $user_id )['identity']['avatar_url'] ?? '' )
+						?: get_avatar_url( $user_id, [ 'size' => 96 ] )
+				) ),
 				'profile'                       => $user_profile->get( $user_id ),
 				'account_url'                   => esc_url_raw( $this->normalize_url( trailingslashit( home_url( '/' ) ) . 'account' ) ),
 				'buy_credits_url'               => esc_url_raw( $this->normalize_url( get_option( 'lt_buy_credits_url', '' ) ) ),

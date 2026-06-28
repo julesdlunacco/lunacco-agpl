@@ -42,6 +42,14 @@ const CORE_PLANETS = new Set([
   'Chiron', 'Vulcan',
 ]);
 
+// Only the ten traditional bodies can form a stellium. Hypotheticals (Vulcan),
+// centaurs (Chiron), Lilith, and asteroids are excluded — matching how readers
+// conventionally count stelliums.
+const STELLIUM_PLANETS = new Set([
+  'Sun', 'Moon', 'Mercury', 'Venus', 'Mars',
+  'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto',
+]);
+
 const ASPECT_TYPES = [
   { name: 'Conjunction', angle: 0, orb: 8, symbol: '☌', color: '#facc15' },
   { name: 'Opposition', angle: 180, orb: 8, symbol: '☍', color: '#f97316' },
@@ -119,7 +127,7 @@ export function calculateAspects(planets: AstroPlanetLike[]): ComputedAspect[] {
 export function detectStelliums(planets: AstroPlanetLike[], minCount = 3): Array<{ sign: string; planets: AstroPlanetLike[] }> {
   const bySign: Record<string, AstroPlanetLike[]> = {};
   planets
-    .filter(p => CORE_PLANETS.has(p.name))
+    .filter(p => STELLIUM_PLANETS.has(p.name))
     .forEach(p => {
       const s = p.sign || signOf(p.longitude);
       if (!bySign[s]) bySign[s] = [];

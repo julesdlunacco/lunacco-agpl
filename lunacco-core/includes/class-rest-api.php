@@ -102,6 +102,14 @@ class LunaCco_REST_API {
 			],
 		] );
 
+		// Profile avatar upload — lets any logged-in user (incl. customers without
+		// the upload_files cap) set an optional profile image.
+		register_rest_route( $ns, '/user/avatar', [
+			'methods'             => 'POST',
+			'callback'            => [ $this->profile, 'rest_upload_avatar' ],
+			'permission_callback' => 'is_user_logged_in',
+		] );
+
 		// People.
 		register_rest_route( $ns, '/people', [
 			[

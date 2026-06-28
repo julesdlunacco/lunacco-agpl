@@ -144,14 +144,24 @@ export default function WheelView({
   const [showAspects, setShowAspects] = useState(true);
   const [showCrossPoints, setShowCrossPoints] = useState(true);
   const [focus, setFocus] = useState<FocusState>({});
-  const [houseSystem, setHouseSystem] = useState<'whole_house' | 'placidus' | 'koch'>('whole_house');
+
+  // Hook pulled once during render — never inside calculate() (avoids React error #321).
+  const { saveChartCache, profileData } = (window as any).LunaCcoHooks?.useUser?.() || {};
+  // House system defaults to the user's profile preference (Koch by default).
+  const housePref = ( profileData?.settings?.house_system as 'whole_house' | 'placidus' | 'koch' ) || 'koch';
+  const [houseSystem, setHouseSystem] = useState<'whole_house' | 'placidus' | 'koch'>(housePref);
+  const userTouchedHouse = useRef(false);
+
+  // Sync to the saved preference once it loads, unless the user picked manually.
+  useEffect(() => {
+    if (!userTouchedHouse.current && profileData?.settings?.house_system) {
+      setHouseSystem(profileData.settings.house_system);
+    }
+  }, [profileData?.settings?.house_system]);
 
   const prevTrigger = useRef(triggerCalc);
   const prevHouseSystem = useRef(houseSystem);
   const chartData = externalChartData || localChartData;
-
-  // Hook pulled once during render — never inside calculate() (avoids React error #321).
-  const { saveChartCache } = (window as any).LunaCcoHooks?.useUser?.() || {};
 
   const form = {
     date: initialDate,
@@ -657,7 +667,7 @@ export default function WheelView({
         </h1>
         </div>
 
-        <HouseSystemToggle value={houseSystem} onChange={setHouseSystem} />
+        <HouseSystemToggle value={houseSystem} onChange={(h) => { userTouchedHouse.current = true; setHouseSystem(h); }} />
       </div>
 
       <div style={{ display: 'flex', gap: 28, marginBottom: 28, paddingBottom: 12, borderBottom: '1px solid var(--hair)', alignItems: 'center' }}>

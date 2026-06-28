@@ -16249,29 +16249,7 @@ Active Channels:
           el.onclick = onElementClick ? () => onElementClick("center", key, key.replace(/-/g, " ")) : null;
         }
       });
-    }, [
-      data,
-      showGates,
-      showCenters,
-      gateFill,
-      definedCenters,
-      stroke,
-      inactiveFill,
-      activeFill,
-      designColor,
-      personalityColor,
-      highlightedGate,
-      highlightedCenter,
-      onElementClick,
-      shadowMode,
-      shadowCenterFill,
-      shadowDefinedFill,
-      isGateDefined,
-      showGateLabels,
-      activeGateCircleColor,
-      activeGateTextColor,
-      inactiveGateTextColor
-    ]);
+    });
     const ARROW_W = 46;
     const ARROW_H = ARROW_W * (22.762 / 54.089);
     const FX = {
@@ -16432,8 +16410,8 @@ Active Channels:
     const arrowColor = (theme == null ? void 0 : theme.arrowColor) || "var(--hd-variable-arrow, var(--ink, #000000))";
     const fontFamily2 = (theme == null ? void 0 : theme.fontFamily) || "var(--font-ui, sans-serif)";
     const activeGateCircleColor = (theme == null ? void 0 : theme.activeGateCircleColor) || "var(--hd-gate-circle, var(--paper, #ffffff))";
-    const shadowCenterFill = (theme == null ? void 0 : theme.shadowUndefinedCenterColor) || "var(--hd-shadow-center, rgba(91, 141, 239, 0.16))";
-    const shadowDefinedCenterFill = (theme == null ? void 0 : theme.shadowDefinedCenterColor) || "var(--hd-shadow-defined-center, rgba(120, 120, 130, 0.16))";
+    const shadowCenterFill = (theme == null ? void 0 : theme.shadowUndefinedCenterColor) || "var(--hd-shadow-center, #dbe2f4)";
+    const shadowDefinedCenterFill = (theme == null ? void 0 : theme.shadowDefinedCenterColor) || "var(--hd-shadow-defined-center, #e6e6ea)";
     const shadowColors = {
       "conditioning-receptor": (theme == null ? void 0 : theme.shadowConditioningColor) || "var(--hd-shadow-conditioning, #2f9f6b)",
       "mental-conditioner": (theme == null ? void 0 : theme.shadowMentalColor) || "var(--hd-shadow-mental, #c23b4a)",
@@ -16821,31 +16799,35 @@ Active Channels:
     const links = Array.isArray(d.footerLinks) ? d.footerLinks : [];
     const agpl = d.agplSourceUrl || "";
     const hasLinks = links.length > 0 || !!agpl;
-    return /* @__PURE__ */ jsxRuntime.jsxs("div", { style: { marginTop: 32, paddingTop: 12, paddingBottom: 24, textAlign: "center" }, children: [
-      /* @__PURE__ */ jsxRuntime.jsx("p", { style: { fontSize: 10, color: "var(--mute)", lineHeight: 1.6, letterSpacing: "0.04em", maxWidth: 640, margin: "0 auto" }, children: text }),
-      hasLinks && /* @__PURE__ */ jsxRuntime.jsxs(
-        "p",
-        {
-          style: {
-            marginTop: 10,
-            paddingTop: 10,
-            borderTop: "1px solid var(--hair)",
-            display: "flex",
-            flexWrap: "wrap",
-            gap: "4px 16px",
-            justifyContent: "center",
-            fontSize: 11,
-            maxWidth: 420,
-            marginLeft: "auto",
-            marginRight: "auto"
-          },
-          children: [
-            links.map((l2, i2) => /* @__PURE__ */ jsxRuntime.jsx("a", { href: l2.url, target: "_blank", rel: "noopener noreferrer", style: { color: "var(--mute)", fontWeight: 700, textDecoration: "none" }, children: l2.label }, i2)),
-            agpl && /* @__PURE__ */ jsxRuntime.jsx("a", { href: agpl, target: "_blank", rel: "noopener noreferrer", style: { color: "var(--indigo)", fontWeight: 700, textDecoration: "none" }, children: "Source code (AGPL)" })
-          ]
-        }
-      )
-    ] });
+    return (
+      // data-html2canvas-ignore: keep this attribution out of the PNG export
+      // (it still renders on-page for AGPL/legal compliance).
+      /* @__PURE__ */ jsxRuntime.jsxs("div", { "data-html2canvas-ignore": true, style: { marginTop: 32, paddingTop: 12, paddingBottom: 24, textAlign: "center" }, children: [
+        /* @__PURE__ */ jsxRuntime.jsx("p", { style: { fontSize: 10, color: "var(--mute)", lineHeight: 1.6, letterSpacing: "0.04em", maxWidth: 640, margin: "0 auto" }, children: text }),
+        hasLinks && /* @__PURE__ */ jsxRuntime.jsxs(
+          "p",
+          {
+            style: {
+              marginTop: 10,
+              paddingTop: 10,
+              borderTop: "1px solid var(--hair)",
+              display: "flex",
+              flexWrap: "wrap",
+              gap: "4px 16px",
+              justifyContent: "center",
+              fontSize: 11,
+              maxWidth: 420,
+              marginLeft: "auto",
+              marginRight: "auto"
+            },
+            children: [
+              links.map((l2, i2) => /* @__PURE__ */ jsxRuntime.jsx("a", { href: l2.url, target: "_blank", rel: "noopener noreferrer", style: { color: "var(--mute)", fontWeight: 700, textDecoration: "none" }, children: l2.label }, i2)),
+              agpl && /* @__PURE__ */ jsxRuntime.jsx("a", { href: agpl, target: "_blank", rel: "noopener noreferrer", style: { color: "var(--indigo)", fontWeight: 700, textDecoration: "none" }, children: "Source code (AGPL)" })
+            ]
+          }
+        )
+      ] })
+    );
   }
   const SIGNS$4 = [
     "Aries",
@@ -16892,7 +16874,7 @@ Active Channels:
     }
     return parts.filter((p) => p != null).join(".");
   }
-  function getIconBase$5() {
+  function getIconBase$4() {
     var _a, _b, _c;
     const modules = ((_a = window.LunaCcoData) == null ? void 0 : _a.modules) || {};
     const astro = modules["luna-astrohd"] || {};
@@ -16943,7 +16925,7 @@ Active Channels:
     Vertex: "VX"
   };
   const Glyph = ({ kind, name, size = 18, className, style, title }) => {
-    const base = getIconBase$5();
+    const base = getIconBase$4();
     const file = kind === "sign" ? SIGN_ICON_MAP$1[name] : PLANET_ICON_MAP$3[name];
     const src = base && file ? `${base}${encodeURIComponent(file)}.svg` : null;
     if (src) {
@@ -17111,17 +17093,18 @@ Active Channels:
     profileIdentity,
     embedded = false
   }) {
-    var _a, _b, _c, _d, _e, _f;
+    var _a, _b, _c, _d, _e, _f, _g;
     const S = { ...DEFAULT_SECTION_TOGGLES, ...(config == null ? void 0 : config.sections) || {} };
     const bodygraphLayers = config == null ? void 0 : config.bodygraph;
     const [busy, setBusy] = React2.useState(false);
     const [error, setError] = React2.useState(null);
     const [chartData, setChartData] = React2.useState(null);
     const [selectedItem, setSelectedItem] = React2.useState(null);
-    const [houseSystem, setHouseSystem] = React2.useState((config == null ? void 0 : config.houseSystem) || "whole_house");
+    const [houseSystem, setHouseSystem] = React2.useState((config == null ? void 0 : config.houseSystem) || "koch");
     const [asteroidData, setAsteroidData] = React2.useState([]);
     const prevTrigger = React2.useRef(triggerCalc);
     const prevHouseSystem = React2.useRef(houseSystem);
+    const userTouchedHouse = React2.useRef(false);
     React2.useEffect(() => {
       if ((config == null ? void 0 : config.houseSystem) && config.houseSystem !== houseSystem) {
         setHouseSystem(config.houseSystem);
@@ -17134,7 +17117,13 @@ Active Channels:
       longitude: initialLng,
       timezone: initialTimezone || Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC"
     };
-    const { refreshUser, saveChartCache } = ((_b = (_a = window.LunaCcoHooks) == null ? void 0 : _a.useUser) == null ? void 0 : _b.call(_a)) || {};
+    const { refreshUser, saveChartCache, profileData } = ((_b = (_a = window.LunaCcoHooks) == null ? void 0 : _a.useUser) == null ? void 0 : _b.call(_a)) || {};
+    React2.useEffect(() => {
+      var _a2;
+      if (!(config == null ? void 0 : config.houseSystem) && !userTouchedHouse.current && ((_a2 = profileData == null ? void 0 : profileData.settings) == null ? void 0 : _a2.house_system)) {
+        setHouseSystem(profileData.settings.house_system);
+      }
+    }, [(_c = profileData == null ? void 0 : profileData.settings) == null ? void 0 : _c.house_system]);
     async function calculate() {
       var _a2, _b2, _c2, _d2;
       if (!form.date || !form.latitude || !form.longitude) {
@@ -17219,7 +17208,7 @@ Active Channels:
       window.addEventListener("astrohd:select-element", handler);
       return () => window.removeEventListener("astrohd:select-element", handler);
     }, []);
-    const selectedAsteroids = (_c = config == null ? void 0 : config.wheels) == null ? void 0 : _c.asteroids;
+    const selectedAsteroids = (_d = config == null ? void 0 : config.wheels) == null ? void 0 : _d.asteroids;
     const asteroidKey = Array.isArray(selectedAsteroids) ? selectedAsteroids.join(",") : "";
     React2.useEffect(() => {
       let cancelled = false;
@@ -17325,13 +17314,16 @@ Active Channels:
               /* @__PURE__ */ jsxRuntime.jsx("em", { style: { color: "var(--gold)" }, children: "Bodygraph" })
             ] })
           ] }),
-          (!config || config.showHouseSystemToggle) && !previewMode && /* @__PURE__ */ jsxRuntime.jsx(HouseSystemToggle, { value: houseSystem, onChange: setHouseSystem })
+          (!config || config.showHouseSystemToggle) && !previewMode && /* @__PURE__ */ jsxRuntime.jsx(HouseSystemToggle, { value: houseSystem, onChange: (h) => {
+            userTouchedHouse.current = true;
+            setHouseSystem(h);
+          } })
         ] }),
         S.summaryBar && /* @__PURE__ */ jsxRuntime.jsx(ChartSummaryBar, { data: chartData, onSelect: handleElementClick }),
         S.angles && /* @__PURE__ */ jsxRuntime.jsx(AngelCrossPanel, { data: chartData, onSelect: handleElementClick }),
         /* @__PURE__ */ jsxRuntime.jsxs("div", { style: { display: "grid", gridTemplateColumns: S.gateColumns ? "264px 1fr 264px" : "1fr", gap: 16, marginTop: 16, alignItems: "start" }, children: [
           S.gateColumns && /* @__PURE__ */ jsxRuntime.jsxs("div", { children: [
-            /* @__PURE__ */ jsxRuntime.jsx(GateColumn, { title: "Design · Body", stream: "design", data: chartData, onSelect: handleElementClick, selectedGate: (selectedItem == null ? void 0 : selectedItem.section_type) === "hd_gates" ? parseInt(selectedItem.item_key) : void 0, allow: (_d = config == null ? void 0 : config.planets) == null ? void 0 : _d.design, bodygraph: config == null ? void 0 : config.bodygraph }),
+            /* @__PURE__ */ jsxRuntime.jsx(GateColumn, { title: "Design · Body", stream: "design", data: chartData, onSelect: handleElementClick, selectedGate: (selectedItem == null ? void 0 : selectedItem.section_type) === "hd_gates" ? parseInt(selectedItem.item_key) : void 0, allow: (_e = config == null ? void 0 : config.planets) == null ? void 0 : _e.design, bodygraph: config == null ? void 0 : config.bodygraph }),
             S.asteroidColumns && /* @__PURE__ */ jsxRuntime.jsx(AsteroidColumn, { stream: "design", asteroids: asteroidData, onSelect: handleElementClick, bodygraph: config == null ? void 0 : config.bodygraph })
           ] }),
           /* @__PURE__ */ jsxRuntime.jsxs("div", { style: { display: "flex", flexDirection: "column", gap: 0, maxWidth: 500, margin: "0 auto", width: "100%" }, children: [
@@ -17361,13 +17353,13 @@ Active Channels:
                   " · ",
                   chartData.definitionType,
                   " · ",
-                  (_e = chartData.incarnationCross) == null ? void 0 : _e.name
+                  (_f = chartData.incarnationCross) == null ? void 0 : _f.name
                 ] })
               ] })
             ] })
           ] }),
           S.gateColumns && /* @__PURE__ */ jsxRuntime.jsxs("div", { children: [
-            /* @__PURE__ */ jsxRuntime.jsx(GateColumn, { title: "Personality · Mind", stream: "personality", data: chartData, onSelect: handleElementClick, selectedGate: (selectedItem == null ? void 0 : selectedItem.section_type) === "hd_gates" ? parseInt(selectedItem.item_key) : void 0, allow: (_f = config == null ? void 0 : config.planets) == null ? void 0 : _f.personality, bodygraph: config == null ? void 0 : config.bodygraph }),
+            /* @__PURE__ */ jsxRuntime.jsx(GateColumn, { title: "Personality · Mind", stream: "personality", data: chartData, onSelect: handleElementClick, selectedGate: (selectedItem == null ? void 0 : selectedItem.section_type) === "hd_gates" ? parseInt(selectedItem.item_key) : void 0, allow: (_g = config == null ? void 0 : config.planets) == null ? void 0 : _g.personality, bodygraph: config == null ? void 0 : config.bodygraph }),
             S.asteroidColumns && /* @__PURE__ */ jsxRuntime.jsx(AsteroidColumn, { stream: "personality", asteroids: asteroidData, onSelect: handleElementClick, bodygraph: config == null ? void 0 : config.bodygraph })
           ] })
         ] }),
@@ -17494,7 +17486,7 @@ Active Channels:
     "Imum Coeli": "Imuncoeli",
     "Vertex": "Vertex"
   };
-  function getIconBase$4() {
+  function getIconBase$3() {
     var _a, _b, _c;
     const modules = ((_a = window.LunaCcoData) == null ? void 0 : _a.modules) || {};
     const astro = modules["luna-astrohd"] || {};
@@ -17572,7 +17564,7 @@ Active Channels:
               position: "relative"
             }, title: p.planet, children: [
               (() => {
-                const iconBase = getIconBase$4();
+                const iconBase = getIconBase$3();
                 const iconFile = PLANET_ICON_MAP$2[p.planet];
                 if (iconBase && iconFile) {
                   return /* @__PURE__ */ jsxRuntime.jsx(
@@ -18460,8 +18452,8 @@ Active Channels:
     return body;
   }
   const SHADOW_THEME = {
-    shadowUndefinedCenterColor: "var(--hd-shadow-center, rgba(69, 112, 175, 0.24))",
-    shadowDefinedCenterColor: "var(--hd-shadow-defined-center, rgba(120, 120, 130, 0.14))",
+    shadowUndefinedCenterColor: "var(--hd-shadow-center, #dbe2f4)",
+    shadowDefinedCenterColor: "var(--hd-shadow-defined-center, #e6e6ea)",
     shadowConditioningColor: "var(--hd-shadow-conditioning, #2f9f6b)",
     shadowMentalColor: "var(--hd-shadow-mental, #c23b4a)",
     shadowTranspersonalColor: "var(--hd-shadow-transpersonal, #3f7fc0)",
@@ -18761,7 +18753,7 @@ Active Channels:
     air: "var(--astro-air, #38bdf8)",
     water: "var(--astro-water, #818cf8)"
   };
-  const PLANET_ICON$1 = {
+  const PLANET_ICON = {
     Sun: "Sun",
     Earth: "Earth",
     Moon: "Moon",
@@ -18786,7 +18778,7 @@ Active Channels:
   };
   const CROSS_POINTS = ["Ascendant", "Descendant", "Midheaven", "Imum Coeli", "Vertex"];
   const ASTEROID_NAMES$1 = ["Ceres", "Pallas", "Juno", "Vesta", "Pholus"];
-  function getIconBase$3() {
+  function getIconBase$2() {
     var _a, _b, _c;
     const modules = ((_a = window.LunaCcoData) == null ? void 0 : _a.modules) || {};
     const astro = modules["luna-astrohd"] || {};
@@ -18929,7 +18921,7 @@ Active Channels:
     const textMuted = "var(--mute, #6b6456)";
     const ink = "var(--ink, #1b1830)";
     const paper = "var(--paper, #fff)";
-    const baseUrl = getIconBase$3();
+    const baseUrl = getIconBase$2();
     const rOuter = 468;
     const rOuterInner = 448;
     const rZodiac = 396;
@@ -19229,7 +19221,7 @@ Active Channels:
               const degreePos = polar(cx, cy, rPlanet - 42, trueAng);
               const r = 24;
               const sel = selectedPlanet === p.name;
-              const iconFile = PLANET_ICON$1[p.name];
+              const iconFile = PLANET_ICON[p.name];
               const iconSrc = baseUrl && iconFile ? `${baseUrl}${encodeURIComponent(iconFile)}.svg` : null;
               const deg2 = Math.floor(norm360(p.longitude) % 30);
               const signIdx = Math.floor(norm360(p.longitude) / 30);
@@ -19438,7 +19430,7 @@ Active Channels:
   function eclipticToSvg(lon, asc) {
     return 180 + asc - lon;
   }
-  function getIconBase$2() {
+  function getIconBase$1() {
     var _a, _b, _c;
     const modules = ((_a = window.LunaCcoData) == null ? void 0 : _a.modules) || {};
     const astro = modules["luna-astrohd"] || {};
@@ -19535,7 +19527,7 @@ Active Channels:
       return allowedAsteroids.includes(name);
     };
     const cx = size / 2, cy = size / 2;
-    const baseUrl = getIconBase$2();
+    const baseUrl = getIconBase$1();
     const asc = ((_a = activations.Ascendant) == null ? void 0 : _a.longitude) ?? 0;
     const hasAsc = activations.Ascendant != null;
     const ascSignStart = Math.floor((asc % 360 + 360) % 360 / 30) * 30;
@@ -20105,6 +20097,18 @@ Active Channels:
     "Chiron",
     "Vulcan"
   ]);
+  const STELLIUM_PLANETS = /* @__PURE__ */ new Set([
+    "Sun",
+    "Moon",
+    "Mercury",
+    "Venus",
+    "Mars",
+    "Jupiter",
+    "Saturn",
+    "Uranus",
+    "Neptune",
+    "Pluto"
+  ]);
   const ASPECT_TYPES = [
     { name: "Conjunction", angle: 0, orb: 8, symbol: "☌", color: "#facc15" },
     { name: "Opposition", angle: 180, orb: 8, symbol: "☍", color: "#f97316" },
@@ -20171,7 +20175,7 @@ Active Channels:
   }
   function detectStelliums$1(planets, minCount = 3) {
     const bySign = {};
-    planets.filter((p) => CORE_PLANETS$1.has(p.name)).forEach((p) => {
+    planets.filter((p) => STELLIUM_PLANETS.has(p.name)).forEach((p) => {
       const s2 = p.sign || signOf$2(p.longitude);
       if (!bySign[s2]) bySign[s2] = [];
       bySign[s2].push(p);
@@ -20419,7 +20423,7 @@ Active Channels:
           alignItems: "baseline",
           justifyContent: "center"
         }, title: p.planet, children: [
-          p.symbol,
+          /* @__PURE__ */ jsxRuntime.jsx(Glyph, { kind: "planet", name: p.planet, size: 16 }),
           p.isRetrograde && /* @__PURE__ */ jsxRuntime.jsx(
             "span",
             {
@@ -20446,7 +20450,10 @@ Active Channels:
           p.fixation === FixingState.Detriment && /* @__PURE__ */ jsxRuntime.jsx("span", { title: "Detriment", style: { fontSize: 12, color: "var(--hd-fixation, var(--gold))", lineHeight: 1 }, children: "▼" }),
           p.fixation === FixingState.Juxtaposed && /* @__PURE__ */ jsxRuntime.jsx("span", { title: "Juxtaposed", style: { fontSize: 14, color: "var(--hd-fixation, var(--gold))", lineHeight: 1, marginTop: -2 }, children: "✶" })
         ] }),
-        /* @__PURE__ */ jsxRuntime.jsx("span", { style: { fontSize: 11.5, color: "var(--mute)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: p.sign }),
+        /* @__PURE__ */ jsxRuntime.jsxs("span", { style: { fontSize: 11.5, color: "var(--mute)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", display: "inline-flex", alignItems: "center", gap: 4 }, children: [
+          p.sign && /* @__PURE__ */ jsxRuntime.jsx(Glyph, { kind: "sign", name: p.sign, size: 13 }),
+          p.sign
+        ] }),
         /* @__PURE__ */ jsxRuntime.jsx("span", { style: { fontSize: 9, fontWeight: 700, color: "var(--mute)", textAlign: "right", opacity: 0.7, textTransform: "uppercase", letterSpacing: "0.05em" }, children: p.planet.length > 5 ? p.planet.substring(0, 3) : p.planet })
       ] }, i2)) })
     ] });
@@ -20477,15 +20484,16 @@ Active Channels:
         const degStr2 = `${deg2}°${min.toString().padStart(2, "0")}'`;
         return /* @__PURE__ */ jsxRuntime.jsxs("tr", { style: { borderTop: "1px solid var(--hair)" }, children: [
           /* @__PURE__ */ jsxRuntime.jsxs("td", { style: { padding: "10px 16px", display: "flex", alignItems: "center", gap: 10 }, children: [
-            /* @__PURE__ */ jsxRuntime.jsx("span", { style: { fontSize: 18, color: "var(--gold)", fontFamily: "var(--font-display)", fontStyle: "italic" }, children: p.symbol }),
+            /* @__PURE__ */ jsxRuntime.jsx(Glyph, { kind: "planet", name: p.name, size: 18 }),
             /* @__PURE__ */ jsxRuntime.jsx("span", { style: { fontWeight: 600, color: "var(--ink)" }, children: p.name }),
             p.isRetrograde && /* @__PURE__ */ jsxRuntime.jsx("span", { style: { color: "var(--hd-active)", fontWeight: 900, fontSize: 10 }, children: "Rx" })
           ] }),
-          /* @__PURE__ */ jsxRuntime.jsxs("td", { style: { padding: "10px 16px", color: "var(--mute)" }, children: [
+          /* @__PURE__ */ jsxRuntime.jsx("td", { style: { padding: "10px 16px", color: "var(--mute)" }, children: /* @__PURE__ */ jsxRuntime.jsxs("span", { style: { display: "inline-flex", alignItems: "center", gap: 5 }, children: [
+            p.sign && /* @__PURE__ */ jsxRuntime.jsx(Glyph, { kind: "sign", name: p.sign, size: 14 }),
             p.sign,
             " ",
             degStr2
-          ] }),
+          ] }) }),
           /* @__PURE__ */ jsxRuntime.jsxs("td", { style: { padding: "10px 16px", fontFamily: "var(--mono)", color: "var(--ink)" }, children: [
             p.gate,
             ".",
@@ -20910,46 +20918,6 @@ Active Channels:
     "Black Moon Lilith",
     "Vulcan"
   ];
-  const ZODIAC_ICON = {
-    Aries: "Aries.svg",
-    Taurus: "Taurus.svg",
-    Gemini: "Gemini.svg",
-    Cancer: "Cancer.svg",
-    Leo: "Leo.svg",
-    Virgo: "Virgo.svg",
-    Libra: "Libra.svg",
-    Scorpio: "Scorpio.svg",
-    Sagittarius: "Sagittarius.svg",
-    Capricorn: "Capricorn.svg",
-    Aquarius: "Aquarius.svg",
-    Pisces: "Pisces.svg"
-  };
-  const PLANET_ICON = {
-    Sun: "Sun.svg",
-    Earth: "Earth.svg",
-    Moon: "Moon.svg",
-    Mercury: "Mercury.svg",
-    Venus: "Venus.svg",
-    Mars: "Mars.svg",
-    Jupiter: "Jupiter.svg",
-    Saturn: "Saturn.svg",
-    Uranus: "Uranus.svg",
-    Neptune: "Neptune.svg",
-    Pluto: "Pluto.svg",
-    NorthNode: "North Node.svg",
-    SouthNode: "South Node.svg",
-    Chiron: "Chiron.svg",
-    "Black Moon Lilith": "BlackMoon Lilith.svg",
-    Vulcan: "Vulcan.svg"
-  };
-  function getIconBase$1() {
-    var _a;
-    return ((_a = window.ahdSettings) == null ? void 0 : _a.pluginUrl) || "";
-  }
-  function iconUrl(file) {
-    const base = getIconBase$1();
-    return base ? `${base}Resources/Icons/${file}` : "";
-  }
   function signOf$1(lon) {
     return ZODIAC_SIGNS$4[Math.floor((lon % 360 + 360) % 360 / 30)];
   }
@@ -20962,26 +20930,23 @@ Active Channels:
         if (!aAct && !bAct) return null;
         const aSign = aAct ? signOf$1(aAct.longitude) : "";
         const bSign = bAct ? signOf$1(bAct.longitude) : "";
-        const pIcon = iconUrl(PLANET_ICON[name] || "");
-        const aZIcon = aSign ? iconUrl(ZODIAC_ICON[aSign] || "") : "";
-        const bZIcon = bSign ? iconUrl(ZODIAC_ICON[bSign] || "") : "";
         return /* @__PURE__ */ jsxRuntime.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 1, minHeight: 15, justifyContent: "center" }, children: [
           /* @__PURE__ */ jsxRuntime.jsx("span", { style: { fontSize: 7, color: "var(--mute)", width: 12, textAlign: "center", flexShrink: 0 }, children: (aAct == null ? void 0 : aAct.house) || "" }),
-          /* @__PURE__ */ jsxRuntime.jsx("span", { style: { width: 11, height: 11, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }, children: aZIcon && /* @__PURE__ */ jsxRuntime.jsx("img", { src: aZIcon, alt: "", style: { width: 9, height: 9, objectFit: "contain" } }) }),
+          /* @__PURE__ */ jsxRuntime.jsx("span", { style: { width: 11, height: 11, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }, children: aSign && /* @__PURE__ */ jsxRuntime.jsx(Glyph, { kind: "sign", name: aSign, size: 9 }) }),
           /* @__PURE__ */ jsxRuntime.jsxs("span", { style: { fontWeight: 600, fontSize: 9, minWidth: 30, textAlign: "center", padding: "1px 2px", borderRadius: 2, background: aAct ? colorA : "transparent", color: aAct ? "var(--btn-fg, white)" : "transparent", display: "inline-flex", alignItems: "center", gap: 2 }, children: [
             aAct ? `${aAct.gate}.${aAct.line}` : "",
             (aAct == null ? void 0 : aAct.fixation) === FixingState.Exalted && /* @__PURE__ */ jsxRuntime.jsx("span", { title: "Exalted", style: { fontSize: 8 }, children: "▲" }),
             (aAct == null ? void 0 : aAct.fixation) === FixingState.Detriment && /* @__PURE__ */ jsxRuntime.jsx("span", { title: "Detriment", style: { fontSize: 8 }, children: "▼" }),
             (aAct == null ? void 0 : aAct.fixation) === FixingState.Juxtaposed && /* @__PURE__ */ jsxRuntime.jsx("span", { title: "Juxtaposed", style: { fontSize: 9 }, children: "✶" })
           ] }),
-          /* @__PURE__ */ jsxRuntime.jsx("span", { style: { width: 14, height: 14, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, margin: "0 2px" }, children: pIcon && /* @__PURE__ */ jsxRuntime.jsx("img", { src: pIcon, alt: name, style: { width: 12, height: 12, objectFit: "contain", filter: "var(--icon-filter, none)" } }) }),
+          /* @__PURE__ */ jsxRuntime.jsx("span", { style: { width: 14, height: 14, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, margin: "0 2px" }, children: /* @__PURE__ */ jsxRuntime.jsx(Glyph, { kind: "planet", name, size: 12 }) }),
           /* @__PURE__ */ jsxRuntime.jsxs("span", { style: { fontWeight: 600, fontSize: 9, minWidth: 30, textAlign: "center", padding: "1px 2px", borderRadius: 2, background: bAct ? colorB : "transparent", color: bAct ? "var(--btn-fg, white)" : "transparent", display: "inline-flex", alignItems: "center", gap: 2 }, children: [
             bAct ? `${bAct.gate}.${bAct.line}` : "",
             (bAct == null ? void 0 : bAct.fixation) === FixingState.Exalted && /* @__PURE__ */ jsxRuntime.jsx("span", { title: "Exalted", style: { fontSize: 8 }, children: "▲" }),
             (bAct == null ? void 0 : bAct.fixation) === FixingState.Detriment && /* @__PURE__ */ jsxRuntime.jsx("span", { title: "Detriment", style: { fontSize: 8 }, children: "▼" }),
             (bAct == null ? void 0 : bAct.fixation) === FixingState.Juxtaposed && /* @__PURE__ */ jsxRuntime.jsx("span", { title: "Juxtaposed", style: { fontSize: 9 }, children: "✶" })
           ] }),
-          /* @__PURE__ */ jsxRuntime.jsx("span", { style: { width: 11, height: 11, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }, children: bZIcon && /* @__PURE__ */ jsxRuntime.jsx("img", { src: bZIcon, alt: "", style: { width: 9, height: 9, objectFit: "contain" } }) }),
+          /* @__PURE__ */ jsxRuntime.jsx("span", { style: { width: 11, height: 11, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }, children: bSign && /* @__PURE__ */ jsxRuntime.jsx(Glyph, { kind: "sign", name: bSign, size: 9 }) }),
           /* @__PURE__ */ jsxRuntime.jsx("span", { style: { fontSize: 7, color: "var(--mute)", width: 12, textAlign: "center", flexShrink: 0 }, children: (bAct == null ? void 0 : bAct.house) || "" })
         ] }, name);
       })
@@ -36089,6 +36054,7 @@ Detailed explanation...
     const [sidebarTitle, setSidebarTitle] = React2.useState("");
     const [sidebarLoading, setSidebarLoading] = React2.useState(false);
     const [presets, setPresets] = React2.useState([]);
+    const importInputRef = React2.useRef(null);
     const [sets, setSets] = React2.useState([]);
     const [selectionPresets, setSelectionPresets] = React2.useState([]);
     const [saveMsg, setSaveMsg] = React2.useState("");
@@ -36219,6 +36185,64 @@ Detailed explanation...
       setPresets((prev) => prev.filter((p) => p.id !== row.id));
       setSaveMsg("Deleted.");
     }
+    function downloadJson(filename, data) {
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a2 = document.createElement("a");
+      a2.href = url;
+      a2.download = filename;
+      document.body.appendChild(a2);
+      a2.click();
+      a2.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 2e3);
+    }
+    function onExportCurrent() {
+      const key = config.preset_key || slugify$1(config.title) || "preset";
+      downloadJson(`${key}.chart-preset.json`, {
+        type: "lunacco-chart-preset",
+        version: 1,
+        preset: config
+      });
+      setSaveMsg("Exported current preset.");
+    }
+    function onExportAll() {
+      if (!presets.length) {
+        setSaveMsg("No saved presets to export.");
+        return;
+      }
+      downloadJson("chart-presets.json", {
+        type: "lunacco-chart-preset-collection",
+        version: 1,
+        presets: presets.map(rowToChartConfig)
+      });
+      setSaveMsg(`Exported ${presets.length} preset${presets.length === 1 ? "" : "s"}.`);
+    }
+    function parsePresetImport(raw) {
+      const data = JSON.parse(raw);
+      const configs = Array.isArray(data == null ? void 0 : data.presets) ? data.presets : (data == null ? void 0 : data.preset) ? [data.preset] : Array.isArray(data) ? data : [data];
+      return configs.filter((c) => c && typeof c === "object").map((c) => normalizeChartConfig(c));
+    }
+    async function onImportFile(file) {
+      setSaveMsg("Importing…");
+      try {
+        const incoming = parsePresetImport(await file.text());
+        if (!incoming.length) {
+          setSaveMsg("No presets found in that file.");
+          return;
+        }
+        let ok = 0;
+        for (const cfg of incoming) {
+          const key = cfg.preset_key || slugify$1(cfg.title);
+          if (!key) continue;
+          await saveChartPreset({ ...cfg, set_id: config.set_id, preset_key: key });
+          ok++;
+        }
+        setPresets(await listChartPresets(config.set_id));
+        setSaveMsg(`Imported ${ok} preset${ok === 1 ? "" : "s"}.`);
+      } catch (e2) {
+        setSaveMsg((e2 == null ? void 0 : e2.message) || "Import failed — invalid file.");
+      }
+    }
     const asteroidCount = config.wheels.asteroids === void 0 ? ASTEROID_CATALOG.length : config.wheels.asteroids.length;
     const hdVisible = config.scope === "hd" || config.scope === "both" && activeTab === "hd";
     const astroVisible = config.scope === "astro" || config.scope === "both" && activeTab === "astro";
@@ -36243,11 +36267,38 @@ Detailed explanation...
             "key: ",
             /* @__PURE__ */ jsxRuntime.jsx("span", { style: { color: "var(--ink)" }, children: config.preset_key || slugify$1(config.title) || "—" })
           ] }),
-          /* @__PURE__ */ jsxRuntime.jsx("button", { onClick: onSave, style: { padding: "8px", background: "var(--ink)", color: "#fff", border: "none", borderRadius: 0, fontSize: 12, fontWeight: 700, cursor: "pointer" }, children: "Save preset" }),
+          /* @__PURE__ */ jsxRuntime.jsxs("div", { style: { display: "flex", gap: 6 }, children: [
+            /* @__PURE__ */ jsxRuntime.jsx("button", { onClick: onSave, style: { flex: 1, padding: "8px", background: "var(--ink)", color: "#fff", border: "none", borderRadius: 0, fontSize: 12, fontWeight: 700, cursor: "pointer" }, children: "Save preset" }),
+            /* @__PURE__ */ jsxRuntime.jsx("button", { onClick: onExportCurrent, title: "Export this preset to a .json file", style: { padding: "8px 10px", background: "var(--card)", color: "var(--ink)", border: "1px solid var(--hair)", borderRadius: 0, fontSize: 12, fontWeight: 700, cursor: "pointer" }, children: "Export" })
+          ] }),
           saveMsg && /* @__PURE__ */ jsxRuntime.jsx("p", { style: { fontSize: 11, color: "var(--mute)", margin: 0 }, children: saveMsg })
         ] }),
         /* @__PURE__ */ jsxRuntime.jsxs("div", { style: groupStyle, children: [
-          /* @__PURE__ */ jsxRuntime.jsx("p", { style: groupTitleStyle, children: "Saved presets" }),
+          /* @__PURE__ */ jsxRuntime.jsxs("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8 }, children: [
+            /* @__PURE__ */ jsxRuntime.jsx("p", { style: { ...groupTitleStyle, margin: 0 }, children: "Saved presets" }),
+            /* @__PURE__ */ jsxRuntime.jsxs("div", { style: { display: "flex", gap: 6 }, children: [
+              /* @__PURE__ */ jsxRuntime.jsx("button", { onClick: () => {
+                var _a;
+                return (_a = importInputRef.current) == null ? void 0 : _a.click();
+              }, title: "Import presets from a .json file", style: { fontSize: 10, fontWeight: 700, padding: "3px 8px", background: "var(--card)", color: "var(--ink)", border: "1px solid var(--hair)", cursor: "pointer" }, children: "Import" }),
+              /* @__PURE__ */ jsxRuntime.jsx("button", { onClick: onExportAll, title: "Export all saved presets", style: { fontSize: 10, fontWeight: 700, padding: "3px 8px", background: "var(--card)", color: "var(--ink)", border: "1px solid var(--hair)", cursor: "pointer" }, children: "Export all" })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxRuntime.jsx(
+            "input",
+            {
+              ref: importInputRef,
+              type: "file",
+              accept: "application/json,.json",
+              style: { display: "none" },
+              onChange: (e2) => {
+                var _a;
+                const f2 = (_a = e2.target.files) == null ? void 0 : _a[0];
+                if (f2) onImportFile(f2);
+                e2.target.value = "";
+              }
+            }
+          ),
           presets.length === 0 && /* @__PURE__ */ jsxRuntime.jsx("p", { style: { fontSize: 11, color: "var(--mute)", fontStyle: "italic", margin: 0 }, children: "None saved for this set yet." }),
           presets.length > 0 && /* @__PURE__ */ jsxRuntime.jsx(jsxRuntime.Fragment, { children: presets.map((p) => /* @__PURE__ */ jsxRuntime.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 6, padding: "3px 0" }, children: [
             /* @__PURE__ */ jsxRuntime.jsx("button", { onClick: () => onLoadPreset(p), style: { flex: 1, textAlign: "left", background: "none", border: "none", cursor: "pointer", fontSize: 12, color: "var(--ink)" }, children: p.title || p.preset_key }),
@@ -36796,6 +36847,57 @@ Detailed explanation...
     const [draft, setDraft] = React2.useState(emptyDraft());
     const [msg, setMsg] = React2.useState("");
     const [loading, setLoading] = React2.useState(true);
+    const importInputRef = React2.useRef(null);
+    function downloadJson(filename, data) {
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a2 = document.createElement("a");
+      a2.href = url;
+      a2.download = filename;
+      document.body.appendChild(a2);
+      a2.click();
+      a2.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 2e3);
+    }
+    function onExportAll() {
+      if (!presets.length) {
+        setMsg("No layouts to export.");
+        return;
+      }
+      downloadJson("selection-presets.json", { type: "lunacco-selection-preset-collection", version: 1, presets });
+      setMsg(`Exported ${presets.length} layout${presets.length === 1 ? "" : "s"}.`);
+    }
+    function normalizePreset(c) {
+      if (!c || typeof c !== "object") return null;
+      const name = String(c.name || "").trim();
+      const key = String(c.key || slugify(name)).trim();
+      if (!key) return null;
+      return {
+        key,
+        name: name || key,
+        asteroids: Array.isArray(c.asteroids) ? c.asteroids.map(String) : [],
+        planets_personality: Array.isArray(c.planets_personality) ? c.planets_personality.map(String) : [...PLANET_CATALOG],
+        planets_design: Array.isArray(c.planets_design) ? c.planets_design.map(String) : [...PLANET_CATALOG]
+      };
+    }
+    async function onImportFile(file) {
+      setMsg("Importing…");
+      try {
+        const data = JSON.parse(await file.text());
+        const list = Array.isArray(data == null ? void 0 : data.presets) ? data.presets : Array.isArray(data) ? data : [data];
+        const incoming = list.map(normalizePreset).filter(Boolean);
+        if (!incoming.length) {
+          setMsg("No layouts found in that file.");
+          return;
+        }
+        let next = presets;
+        for (const p of incoming) next = await saveSelectionPreset(p);
+        setPresets(next);
+        setMsg(`Imported ${incoming.length} layout${incoming.length === 1 ? "" : "s"}.`);
+      } catch (e2) {
+        setMsg((e2 == null ? void 0 : e2.message) || "Import failed — invalid file.");
+      }
+    }
     React2.useEffect(() => {
       listSelectionPresets().then((p) => {
         setPresets(p);
@@ -36849,10 +36951,32 @@ Detailed explanation...
               setDraft(emptyDraft());
               setMsg("");
             },
-            style: { width: "100%", padding: "8px", background: "var(--ink)", color: "#fff", border: "none", borderRadius: 8, fontSize: 12, fontWeight: 700, cursor: "pointer", marginBottom: 12 },
+            style: { width: "100%", padding: "8px", background: "var(--ink)", color: "#fff", border: "none", borderRadius: 8, fontSize: 12, fontWeight: 700, cursor: "pointer", marginBottom: 8 },
             children: "+ New layout"
           }
         ),
+        /* @__PURE__ */ jsxRuntime.jsxs("div", { style: { display: "flex", gap: 6, marginBottom: 12 }, children: [
+          /* @__PURE__ */ jsxRuntime.jsx("button", { onClick: () => {
+            var _a;
+            return (_a = importInputRef.current) == null ? void 0 : _a.click();
+          }, style: { ...smallBtn, flex: 1 }, children: "Import" }),
+          /* @__PURE__ */ jsxRuntime.jsx("button", { onClick: onExportAll, style: { ...smallBtn, flex: 1 }, children: "Export all" }),
+          /* @__PURE__ */ jsxRuntime.jsx(
+            "input",
+            {
+              ref: importInputRef,
+              type: "file",
+              accept: "application/json,.json",
+              style: { display: "none" },
+              onChange: (e2) => {
+                var _a;
+                const f2 = (_a = e2.target.files) == null ? void 0 : _a[0];
+                if (f2) onImportFile(f2);
+                e2.target.value = "";
+              }
+            }
+          )
+        ] }),
         loading && /* @__PURE__ */ jsxRuntime.jsx("p", { style: { fontSize: 12, color: "var(--mute)" }, children: "Loading…" }),
         !loading && presets.length === 0 && /* @__PURE__ */ jsxRuntime.jsx("p", { style: { fontSize: 12, color: "var(--mute)", fontStyle: "italic" }, children: "None yet — create one." }),
         presets.map((p) => /* @__PURE__ */ jsxRuntime.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 6, padding: "4px 0", borderBottom: "1px solid var(--hair)" }, children: [
@@ -37062,7 +37186,7 @@ Detailed explanation...
     gateChartType = "wheel",
     gatePresetKey = null
   }) {
-    var _a, _b, _c;
+    var _a, _b, _c, _d, _e;
     const [busy, setBusy] = React2.useState(false);
     const [error, setError] = React2.useState(null);
     const [localChartData, setLocalChartData] = React2.useState(null);
@@ -37070,11 +37194,19 @@ Detailed explanation...
     const [showAspects, setShowAspects] = React2.useState(true);
     const [showCrossPoints, setShowCrossPoints] = React2.useState(true);
     const [focus, setFocus] = React2.useState({});
-    const [houseSystem, setHouseSystem] = React2.useState("whole_house");
+    const { saveChartCache, profileData } = ((_b = (_a = window.LunaCcoHooks) == null ? void 0 : _a.useUser) == null ? void 0 : _b.call(_a)) || {};
+    const housePref = ((_c = profileData == null ? void 0 : profileData.settings) == null ? void 0 : _c.house_system) || "koch";
+    const [houseSystem, setHouseSystem] = React2.useState(housePref);
+    const userTouchedHouse = React2.useRef(false);
+    React2.useEffect(() => {
+      var _a2;
+      if (!userTouchedHouse.current && ((_a2 = profileData == null ? void 0 : profileData.settings) == null ? void 0 : _a2.house_system)) {
+        setHouseSystem(profileData.settings.house_system);
+      }
+    }, [(_d = profileData == null ? void 0 : profileData.settings) == null ? void 0 : _d.house_system]);
     const prevTrigger = React2.useRef(triggerCalc);
     const prevHouseSystem = React2.useRef(houseSystem);
     const chartData = externalChartData || localChartData;
-    const { saveChartCache } = ((_b = (_a = window.LunaCcoHooks) == null ? void 0 : _a.useUser) == null ? void 0 : _b.call(_a)) || {};
     const form = {
       date: initialDate,
       time: initialTime || "12:00",
@@ -37539,7 +37671,10 @@ Detailed explanation...
             /* @__PURE__ */ jsxRuntime.jsx("em", { style: { color: "var(--gold)" }, children: "Astrology Map" })
           ] })
         ] }),
-        /* @__PURE__ */ jsxRuntime.jsx(HouseSystemToggle, { value: houseSystem, onChange: setHouseSystem })
+        /* @__PURE__ */ jsxRuntime.jsx(HouseSystemToggle, { value: houseSystem, onChange: (h) => {
+          userTouchedHouse.current = true;
+          setHouseSystem(h);
+        } })
       ] }),
       /* @__PURE__ */ jsxRuntime.jsx("div", { style: { display: "flex", gap: 28, marginBottom: 28, paddingBottom: 12, borderBottom: "1px solid var(--hair)", alignItems: "center" }, children: ["Wheel", "Insights", "Aspects", "Placements"].map((t) => /* @__PURE__ */ jsxRuntime.jsx(
         "button",
@@ -37681,7 +37816,7 @@ Detailed explanation...
                 ] }),
                 /* @__PURE__ */ jsxRuntime.jsxs("div", { style: { fontSize: 14, color: "var(--mute)", lineHeight: 1.5 }, children: [
                   "Rising sign ",
-                  (_c = acts.Ascendant) == null ? void 0 : _c.sign,
+                  (_e = acts.Ascendant) == null ? void 0 : _e.sign,
                   " · House ",
                   chartRuler.house || "—"
                 ] })
@@ -47451,11 +47586,6 @@ Detailed explanation...
       const out = ["Sun", "Moon", "Rising"];
       if (layerOn("chart_ruler")) out.push("Chart Ruler");
       out.push("North Node");
-      if (layerOn("aspects")) out.push("Aspect");
-      if (layerOn("house_rulers")) out.push("House Rulers");
-      if (layerOn("stelliums")) out.push("Stelliums");
-      if (layerOn("moon_phase")) out.push("Moon Phase");
-      if (layerOn("chart_shape")) out.push("Chart Shape");
       return out;
     }, [layerOn]);
     const hdPills = React2.useMemo(() => {
@@ -47465,8 +47595,6 @@ Detailed explanation...
       if (layerOn("profile")) out.push("Profile");
       if (layerOn("definition")) out.push("Definition");
       if (layerOn("channels")) out.push("Channels");
-      out.push("Gates");
-      if (layerOn("variables")) out.push("Variables");
       return out;
     }, [layerOn]);
     hdPillsRef.current = hdPills;
@@ -47705,7 +47833,7 @@ Detailed explanation...
       setActivePlacementKey("");
     }, [selectedItems]);
     React2.useEffect(() => {
-      var _a2, _b2, _c2, _d2, _e2;
+      var _a2, _b2, _c2, _d2, _e2, _f2, _g2;
       if (loadingDefs) return;
       let items = [];
       if (selectedItems.length > 0) {
@@ -47771,7 +47899,15 @@ Detailed explanation...
           });
         }
       });
-      const activeKey = ((_a2 = placements.find((p) => p.key === activePlacementKey)) == null ? void 0 : _a2.key) || ((_b2 = placements[0]) == null ? void 0 : _b2.key) || "";
+      let hintKey = "";
+      const planetHint = items.find((i2) => i2.sectionType === "hd_planets" && i2.title);
+      if (planetHint) {
+        const parts = String(planetHint.title).trim().split(/\s+/);
+        const side = (_a2 = parts[0]) == null ? void 0 : _a2.toLowerCase();
+        const planet = parts.slice(1).join(" ").toLowerCase();
+        if ((side === "design" || side === "personality") && planet) hintKey = `${side}-${planet}`;
+      }
+      const activeKey = activePlacementKey && ((_b2 = placements.find((p) => p.key === activePlacementKey)) == null ? void 0 : _b2.key) || ((_c2 = placements.find((p) => p.key === hintKey)) == null ? void 0 : _c2.key) || ((_d2 = placements[0]) == null ? void 0 : _d2.key) || "";
       setGatePlacements(placements.map(({ key, side, planet }) => ({ key, side, planet })));
       if (activeKey !== activePlacementKey) setActivePlacementKey(activeKey);
       const active = placements.find((p) => p.key === activeKey);
@@ -47849,11 +47985,11 @@ Detailed explanation...
         }
       }
       if (!primaryType) {
-        primaryType = SECTION_TO_ENTITY_TYPE[(_c2 = items[0]) == null ? void 0 : _c2.sectionType] || "";
+        primaryType = SECTION_TO_ENTITY_TYPE[(_e2 = items[0]) == null ? void 0 : _e2.sectionType] || "";
         composition = resolveCompFor(primaryType).composition;
       }
       const chartKey = String((activeChart == null ? void 0 : activeChart.id) || "").replace(/^ahd_/, "");
-      const sidebarTemplate = ((_e2 = (_d2 = settings.chartDisplaySettings) == null ? void 0 : _d2[chartKey]) == null ? void 0 : _e2.sidebar_template) || "";
+      const sidebarTemplate = ((_g2 = (_f2 = settings.chartDisplaySettings) == null ? void 0 : _f2[chartKey]) == null ? void 0 : _g2.sidebar_template) || "";
       const synthTemplate = composition ? composition.synth || void 0 : sidebarTemplate || void 0;
       const wantSynth = !!synthTemplate;
       let cancelled = false;
